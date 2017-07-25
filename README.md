@@ -4,4 +4,5 @@ This is my own adventure in learning a new language, [elixir](https://elixir-lan
 
 ## The adventure
 
-* Introduction: [the first page of elixir-lang.org](https://elixir-lang.org/)
+* [The first page of elixir-lang.org](https://elixir-lang.org/)
+* [Introduction](https://elixir-lang.org/getting-started/introduction.html)
