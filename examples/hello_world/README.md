@@ -41,7 +41,7 @@ defmodule HelloWorld do
 end
 ```
 
-An example of ExUnit
+An example of ExUnit `test/hello_world_test.exs`
 
 ```
 defmodule HelloWorldTest do
@@ -54,4 +54,4 @@ defmodule HelloWorldTest do
 end
 ```
 
-the line `doctest HelloWorld` will run doctest present in HelloWorld module
+the line `doctest HelloWorld` will run doctest present in HelloWorld module. More important, all tests are `.exs` so we don't need to compile before running them.
