@@ -4,8 +4,9 @@ This is my own adventure in learning a new language, [elixir](https://elixir-lan
 
 ## The adventure
 
-* [The first page of elixir-lang.org](https://elixir-lang.org/)
-* [Introduction](https://elixir-lang.org/getting-started/introduction.html)
+
+* warming up ... ([simple](examples/simple.ex) | [basic types](examples/basic_types.ex) | [linked lists](examples/linked_lists.ex))
+* the first test *TODO*
 
 ## The code
 
