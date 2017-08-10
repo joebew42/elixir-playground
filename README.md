@@ -5,7 +5,7 @@ This is my own adventure in learning a new language, [elixir](https://elixir-lan
 ## The adventure
 
 
-* warming up ... ([simple](examples/simple.ex) | [basic types](examples/basic_types.ex) | [linked lists](examples/linked_lists.ex))
+* warming up ... ([simple](examples/simple.exs) | [basic types](examples/basic_types.ex) | [linked lists](examples/linked_lists.ex))
 * the first test *TODO*
 
 ## The code
