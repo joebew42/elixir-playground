@@ -7,6 +7,7 @@ This is my own adventure in learning a new language, [elixir](https://elixir-lan
 
 * warming up ... ([simple](examples/simple.exs) | [basic types](examples/basic_types.ex) | [linked lists](examples/linked_lists.ex))
 * [hello world](examples/hello_world)
+* [simple agent](examples/simple_agent)
 
 ## The code
 
