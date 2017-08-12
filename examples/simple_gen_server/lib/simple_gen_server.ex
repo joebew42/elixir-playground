@@ -46,14 +46,18 @@ defmodule SimpleGenServer do
   def handle_call({:get, name, message}, _from, names) do
     if registered?(name, names) do
       bucket = bucket_with(name, names)
-      response = Bucket.get(bucket, message)
-      if response == nil do
-        {:reply, :message_not_found, names}
-      else
-        {:reply, response, names}
-      end
+      {:reply, message_from(bucket, message), names}
     else
       {:reply, :process_not_found, names}
+    end
+  end
+
+  def message_from(bucket, message) do
+    response = Bucket.get(bucket, message)
+    if response == nil do
+      :message_not_found
+    else
+      response
     end
   end
 
