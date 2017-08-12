@@ -30,4 +30,25 @@ defmodule SimpleGenServerTest do
     assert :ok == response
   end
 
+  test ":process_not_found when trying to get a message from a non registered process", %{server: registry} do
+    response = SimpleGenServer.get(registry, "non_registered_process", "a_message")
+
+    assert :process_not_found == response
+  end
+
+  test ":message_not_found when trying to get a message that not exists", %{server: registry} do
+    SimpleGenServer.create(registry, "a_registered_process")
+    response = SimpleGenServer.get(registry, "a_registered_process", "a_message")
+
+    assert :message_not_found == response
+  end
+
+  test "returns a saved message from a registered process", %{server: registry} do
+    SimpleGenServer.create(registry, "a_registered_process")
+    SimpleGenServer.put(registry, "a_registered_process", "a_message")
+    response = SimpleGenServer.get(registry, "a_registered_process", "a_message")
+
+    assert "stored_value" == response
+  end
+
 end

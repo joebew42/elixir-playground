@@ -45,6 +45,10 @@ With pattern matching:
 ...
 ```
 
+## TODO
+
+* Rename SimpleGenServer in RegistryServer
+
 ## Extras: Trying to write a GenServer in Erlang
 
 TODO
