@@ -9,6 +9,7 @@ This is my own adventure in learning a new language, [elixir](https://elixir-lan
 * [hello world](examples/hello_world)
 * [simple agent](examples/simple_agent)
 * [simple gen server](examples/simple_gen_server)
+* [supervisor and application](examples/supervisor_and_application)
 
 ## The code
 
