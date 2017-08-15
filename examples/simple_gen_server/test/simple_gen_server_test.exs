@@ -7,8 +7,10 @@ defmodule SimpleGenServerTest do
     %{server: registry}
   end
 
-  test "returns :ok when a new name is registered", %{server: registry} do
-    assert :ok == SimpleGenServer.create(registry, "a_new_name")
+  test ":ok and bucket id when a new bucket is registered", %{server: registry} do
+    {:ok, bucket_id} = SimpleGenServer.create(registry, "a_new_name")
+
+    assert Process.alive?(bucket_id)
   end
 
   test "returns :already_registered when a name is already registered", %{server: registry} do
@@ -49,6 +51,14 @@ defmodule SimpleGenServerTest do
     response = SimpleGenServer.get(registry, "a_registered_process", "a_message")
 
     assert "stored_value" == response
+  end
+
+  test ":process_not_found when trying to save a message in a dead bucket", %{server: registry} do
+    {:ok, bucket_id} = SimpleGenServer.create(registry, "a_registered_process")
+    Agent.stop(bucket_id)
+    response = SimpleGenServer.put(registry, "a_registered_process", "a_message")
+
+    assert :process_not_found == response
   end
 
 end
