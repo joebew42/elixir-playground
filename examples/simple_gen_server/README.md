@@ -48,7 +48,8 @@ With pattern matching:
 ## TODO
 
 * Rename SimpleGenServer in RegistryServer
+* [Understand how mock/contract works in Elixir](http://blog.plataformatec.com.br/2015/10/mocks-and-explicit-contracts/)
 
-## Extras: Trying to write a GenServer in Erlang
+## Nice to have
 
-TODO
+* Trying to write a GenServer in Erlang
