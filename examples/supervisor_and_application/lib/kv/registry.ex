@@ -12,8 +12,8 @@ defmodule KV.Registry do
     GenServer.call(pid, {:create, name})
   end
 
-  def put(pid, process_name, message) do
-    GenServer.call(pid, {:put, process_name, message})
+  def put(pid, bucket_name, message_key, message_value) do
+    GenServer.call(pid, {:put, bucket_name, message_key, message_value})
   end
 
   def get(pid, process_name, message) do
@@ -29,8 +29,8 @@ defmodule KV.Registry do
     {:reply, response, {names, monitors}}
   end
 
-  def handle_call({:put, name, message}, _from, {names, monitors}) do
-    response = create_message(message, name, names)
+  def handle_call({:put, bucket_name, message_key, message_value}, _from, {names, monitors}) do
+    response = create_message(message_key, message_value, bucket_name, names)
     {:reply, response, {names, monitors}}
   end
 
@@ -58,11 +58,11 @@ defmodule KV.Registry do
     end
   end
 
-  def create_message(message, name, names) do
-    case registered?(name, names) do
+  def create_message(message_key, message_value, bucket_name, names) do
+    case registered?(bucket_name, names) do
       true ->
-        bucket = bucket_with(name, names)
-        KV.Bucket.put(bucket, message, "stored_value")
+        bucket = bucket_with(bucket_name, names)
+        KV.Bucket.put(bucket, message_key, message_value)
         :ok
       _ ->
         :process_not_found
