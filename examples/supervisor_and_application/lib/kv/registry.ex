@@ -20,44 +20,44 @@ defmodule KV.Registry do
     GenServer.call(pid, {:get, process_name, message})
   end
 
-  def handle_call({:create, name}, _from, {names, monitors}) do
-    {response, names, monitors} = create_bucket(name, names, monitors)
-    {:reply, response, {names, monitors}}
+  def handle_call({:create, name}, _from, {buckets, monitors}) do
+    {response, buckets, monitors} = create_bucket(name, buckets, monitors)
+    {:reply, response, {buckets, monitors}}
   end
 
-  def handle_call({:put, bucket_name, message_key, message_value}, _from, {names, monitors}) do
-    response = create_message(message_key, message_value, bucket_name, names)
-    {:reply, response, {names, monitors}}
+  def handle_call({:put, bucket_name, message_key, message_value}, _from, {buckets, monitors}) do
+    response = create_message(message_key, message_value, bucket_name, buckets)
+    {:reply, response, {buckets, monitors}}
   end
 
-  def handle_call({:get, name, message}, _from, {names, monitors}) do
-    response = read_message(message, name, names)
-    {:reply, response, {names, monitors}}
+  def handle_call({:get, name, message}, _from, {buckets, monitors}) do
+    response = read_message(message, name, buckets)
+    {:reply, response, {buckets, monitors}}
   end
 
-  def handle_info({:DOWN, monitor, :process, _pid, _reason}, {names, monitors}) do
+  def handle_info({:DOWN, monitor, :process, _pid, _reason}, {buckets, monitors}) do
     {name, monitors} = Map.pop(monitors, monitor)
-    names = Map.delete(names, name)
-    {:noreply, {names, monitors}}
+    buckets = Map.delete(buckets, name)
+    {:noreply, {buckets, monitors}}
   end
 
-  def create_bucket(name, names, monitors) do
-    case registered?(name, names) do
+  def create_bucket(name, buckets, monitors) do
+    case registered?(name, buckets) do
       true ->
-        {:already_registered, names, monitors}
+        {:already_registered, buckets, monitors}
       _ ->
         {:ok, bucket_id} = KV.Bucket.start_link([])
         monitor = Process.monitor(bucket_id)
         monitors = Map.put(monitors, monitor, name)
-        names = Map.put(names, name, bucket_id)
-        {{:ok, bucket_id}, names, monitors}
+        buckets = Map.put(buckets, name, bucket_id)
+        {{:ok, bucket_id}, buckets, monitors}
     end
   end
 
-  def create_message(message_key, message_value, bucket_name, names) do
-    case registered?(bucket_name, names) do
+  def create_message(message_key, message_value, bucket_name, buckets) do
+    case registered?(bucket_name, buckets) do
       true ->
-        bucket = bucket_with(bucket_name, names)
+        bucket = bucket_with(bucket_name, buckets)
         KV.Bucket.put(bucket, message_key, message_value)
         :ok
       _ ->
@@ -65,10 +65,10 @@ defmodule KV.Registry do
     end
   end
 
-  def read_message(message, name, names) do
-    case registered?(name, names) do
+  def read_message(message, name, buckets) do
+    case registered?(name, buckets) do
       true ->
-        bucket = bucket_with(name, names)
+        bucket = bucket_with(name, buckets)
         message_from(bucket, message)
       _ ->
         :process_not_found
@@ -84,11 +84,11 @@ defmodule KV.Registry do
     end
   end
 
-  def registered?(name, names) do
-    Map.has_key?(names, name)
+  def registered?(name, buckets) do
+    Map.has_key?(buckets, name)
   end
 
-  def bucket_with(name, names) do
-    Map.get(names, name)
+  def bucket_with(name, buckets) do
+    Map.get(buckets, name)
   end
 end
