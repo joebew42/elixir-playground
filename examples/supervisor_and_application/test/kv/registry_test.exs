@@ -7,22 +7,22 @@ defmodule KV.RegistryTest do
     %{server: registry}
   end
 
-  test ":ok and bucket id when a new bucket is registered", %{server: registry} do
-    {:ok, bucket_id} = KV.Registry.create(registry, "a_new_name")
+  test ":ok and bucket id when a new bucket is created", %{server: registry} do
+    {:ok, bucket_id} = KV.Registry.create(registry, "a_bucket")
 
     assert Process.alive?(bucket_id)
   end
 
-  test "returns :already_registered when a name is already registered", %{server: registry} do
-    KV.Registry.create(registry, "same_name")
+  test ":already_created when a bucket exists", %{server: registry} do
+    KV.Registry.create(registry, "a_bucket")
 
-    assert :already_registered == KV.Registry.create(registry, "same_name")
+    assert :already_created == KV.Registry.create(registry, "a_bucket")
   end
 
-  test ":process_not_found when trying to send a message to a non existing bucket", %{server: registry} do
+  test ":bucket_not_found when trying to save a message to a non existing bucket", %{server: registry} do
     response = KV.Registry.put(registry, "non_existing_bucket", "message_key", "message_value")
 
-    assert :process_not_found == response
+    assert :bucket_not_found == response
   end
 
   test ":ok when a message is saved to a bucket of messages", %{server: registry} do
@@ -32,11 +32,12 @@ defmodule KV.RegistryTest do
     assert :ok == response
   end
 
-  test ":process_not_found when trying to get a message from a non registered process", %{server: registry} do
-    response = KV.Registry.get(registry, "non_registered_process", "a_message")
+  test ":bucket_not_found when trying to get a message from a non existing bucket", %{server: registry} do
+    response = KV.Registry.get(registry, "non_existing_bucket", "a_message")
 
-    assert :process_not_found == response
+    assert :bucket_not_found == response
   end
+
 
   test ":message_not_found when trying to get a message that not exists", %{server: registry} do
     KV.Registry.create(registry, "a_registered_process")
@@ -45,7 +46,7 @@ defmodule KV.RegistryTest do
     assert :message_not_found == response
   end
 
-  test "returns a saved message from a bucket of messages", %{server: registry} do
+  test "get a saved message from a bucket of messages", %{server: registry} do
     KV.Registry.create(registry, "a_bucket")
     KV.Registry.put(registry, "a_bucket", "test", "a test message")
     response = KV.Registry.get(registry, "a_bucket", "test")
@@ -53,12 +54,12 @@ defmodule KV.RegistryTest do
     assert "a test message" == response
   end
 
-  test ":process_not_found when trying to save a message in a dead bucket", %{server: registry} do
+  test ":bucket_not_found when trying to save a message in a dead bucket", %{server: registry} do
     {:ok, bucket_id} = KV.Registry.create(registry, "a_bucket")
     Agent.stop(bucket_id)
     response = KV.Registry.put(registry, "a_bucket", "message_key", "message_value")
 
-    assert :process_not_found == response
+    assert :bucket_not_found == response
   end
 
 end

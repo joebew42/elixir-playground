@@ -16,8 +16,8 @@ defmodule KV.Registry do
     GenServer.call(pid, {:put, bucket_name, message_key, message_value})
   end
 
-  def get(pid, process_name, message) do
-    GenServer.call(pid, {:get, process_name, message})
+  def get(pid, bucket_name, message) do
+    GenServer.call(pid, {:get, bucket_name, message})
   end
 
   def handle_call({:create, name}, _from, {buckets, monitors}) do
@@ -42,9 +42,9 @@ defmodule KV.Registry do
   end
 
   def create_bucket(name, buckets, monitors) do
-    case registered?(name, buckets) do
+    case exists?(name, buckets) do
       true ->
-        {:already_registered, buckets, monitors}
+        {:already_created, buckets, monitors}
       _ ->
         {:ok, bucket_id} = KV.Bucket.start_link([])
         monitor = Process.monitor(bucket_id)
@@ -55,28 +55,28 @@ defmodule KV.Registry do
   end
 
   def create_message(message_key, message_value, bucket_name, buckets) do
-    case registered?(bucket_name, buckets) do
+    case exists?(bucket_name, buckets) do
       true ->
         bucket = bucket_with(bucket_name, buckets)
         KV.Bucket.put(bucket, message_key, message_value)
         :ok
       _ ->
-        :process_not_found
+        :bucket_not_found
     end
   end
 
   def read_message(message, name, buckets) do
-    case registered?(name, buckets) do
+    case exists?(name, buckets) do
       true ->
         bucket = bucket_with(name, buckets)
         message_from(bucket, message)
       _ ->
-        :process_not_found
+        :bucket_not_found
     end
   end
 
-  def message_from(bucket, message) do
-    response = KV.Bucket.get(bucket, message)
+  def message_from(bucket, message_key) do
+    response = KV.Bucket.get(bucket, message_key)
     if response == nil do
       :message_not_found
     else
@@ -84,7 +84,7 @@ defmodule KV.Registry do
     end
   end
 
-  def registered?(name, buckets) do
+  def exists?(name, buckets) do
     Map.has_key?(buckets, name)
   end
 
