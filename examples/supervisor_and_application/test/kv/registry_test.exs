@@ -53,6 +53,14 @@ defmodule KV.RegistryTest do
     assert "stored_value" == response
   end
 
+  test "returns a saved message from a bucket of messages", %{server: registry} do
+    KV.Registry.create(registry, "a_bucket")
+    KV.Registry.put(registry, "a_bucket", "test", "a test message")
+    response = KV.Registry.get(registry, "a_bucket", "test")
+
+    assert "a test message" == response
+  end
+
   test ":process_not_found when trying to save a message in a dead bucket", %{server: registry} do
     {:ok, bucket_id} = KV.Registry.create(registry, "a_registered_process")
     Agent.stop(bucket_id)
