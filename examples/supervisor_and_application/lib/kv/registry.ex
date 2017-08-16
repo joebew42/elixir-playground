@@ -20,10 +20,6 @@ defmodule KV.Registry do
     GenServer.call(pid, {:get, process_name, message})
   end
 
-  def init(names) do
-    {:ok, names}
-  end
-
   def handle_call({:create, name}, _from, {names, monitors}) do
     {response, names, monitors} = create_bucket(name, names, monitors)
     {:reply, response, {names, monitors}}
