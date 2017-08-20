@@ -3,21 +3,30 @@ defmodule Bank do
     spawn(fn -> loop(1000) end)
   end
 
-  def query(bank_pid, {:current_balance_of, "existing_account"}) do
-    send bank_pid, {self(), {:current_balance_of, "existing_account"}}
+  def query(bank_pid, message) do
+    send bank_pid, {self(), message}
     receive do
       reply -> reply
     end
   end
 
-  def query(_xxx, _yyy) do
+  defp loop(balance) do
+    receive do
+      {from, message} ->
+        reply = handle(message, balance)
+        send from, reply
+    end
+  end
+
+  defp handle({:deposit, 100, "non_existing_account"}, _balance) do
     {:error, :account_not_exists}
   end
 
-  defp loop(balance) do
-    receive do
-      {from, {:current_balance_of, "existing_account"}} ->
-        send from, {:ok, balance}
-    end
+  defp handle({:current_balance_of, "non_existing_account"}, _balance) do
+    {:error, :account_not_exists}
+  end
+
+  defp handle({:current_balance_of, "existing_account"}, balance) do
+    {:ok, balance}
   end
 end
