@@ -24,8 +24,13 @@ defmodule Bank do
   end
 
   defp handle({:deposit, amount, "existing_account"}, balance) do
-    new_balance = balance + amount
-    {:ok, new_balance}
+    case amount > 0 do
+      true ->
+        new_balance = balance + amount
+        {:ok, new_balance}
+      false ->
+        {:ok, balance}
+    end
   end
 
   defp handle({:current_balance_of, "non_existing_account"}, balance) do

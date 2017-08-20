@@ -1,6 +1,6 @@
 # DOING
 
-* deposit money
+* add a catch all handler for not handled messages
 
 # TODO
 
@@ -14,3 +14,4 @@
 # DONE
 
 * check current account balance
+* deposit money

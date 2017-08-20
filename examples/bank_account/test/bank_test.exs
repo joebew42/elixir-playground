@@ -40,6 +40,14 @@ defmodule BankTest do
 
       assert {:ok, 1200} == response
     end
+
+    test "the current balance will not change with negative amount" do
+      bank_pid = Bank.start()
+      Bank.query(bank_pid, {:deposit, -100, "existing_account"})
+      response = Bank.query(bank_pid, {:current_balance_of, "existing_account"})
+
+      assert {:ok, 1000} == response
+    end
   end
 
 end
