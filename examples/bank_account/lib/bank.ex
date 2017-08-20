@@ -3,7 +3,7 @@ defmodule Bank do
     spawn(fn -> loop(1000) end)
   end
 
-  def query(bank_pid, message) do
+  def execute(bank_pid, message) do
     send bank_pid, {self(), message}
     receive do
       reply -> reply
