@@ -25,13 +25,21 @@ defmodule BankTest do
       assert {:error, :account_not_exists} == response
     end
 
-    # test "the current balance will increase if the account exists" do
-    #   bank_pid = Bank.start()
-    #   Bank.query(bank_pid, {:deposit, 100, "existing_account"})
-    #   response = Bank.query(bank_pid, {:current_balance_of, "existing_account"})
+    test "the current balance will increase by 100 if the account exists" do
+      bank_pid = Bank.start()
+      Bank.query(bank_pid, {:deposit, 100, "existing_account"})
+      response = Bank.query(bank_pid, {:current_balance_of, "existing_account"})
 
-    #   assert {:ok, 1100} == response
-    # end
+      assert {:ok, 1100} == response
+    end
+
+    test "the current balance will increase by 200 if the account exists" do
+      bank_pid = Bank.start()
+      Bank.query(bank_pid, {:deposit, 200, "existing_account"})
+      response = Bank.query(bank_pid, {:current_balance_of, "existing_account"})
+
+      assert {:ok, 1200} == response
+    end
   end
 
 end

@@ -13,20 +13,26 @@ defmodule Bank do
   defp loop(balance) do
     receive do
       {from, message} ->
-        reply = handle(message, balance)
+        {reply, new_balance} = handle(message, balance)
         send from, reply
+        loop(new_balance)
     end
   end
 
-  defp handle({:deposit, 100, "non_existing_account"}, _balance) do
-    {:error, :account_not_exists}
+  defp handle({:deposit, 100, "non_existing_account"}, balance) do
+    {{:error, :account_not_exists}, balance}
   end
 
-  defp handle({:current_balance_of, "non_existing_account"}, _balance) do
-    {:error, :account_not_exists}
+  defp handle({:deposit, amount, "existing_account"}, balance) do
+    new_balance = balance + amount
+    {:ok, new_balance}
+  end
+
+  defp handle({:current_balance_of, "non_existing_account"}, balance) do
+    {{:error, :account_not_exists}, balance}
   end
 
   defp handle({:current_balance_of, "existing_account"}, balance) do
-    {:ok, balance}
+    {{:ok, balance}, balance}
   end
 end
