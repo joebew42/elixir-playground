@@ -43,4 +43,12 @@ defmodule BankTest do
       assert {:ok, 1000} == response
     end
   end
+
+  test "returns error when a message cannot be handled" do
+    bank_pid = Bank.start()
+    response = Bank.query(bank_pid, {:message_that_cannot_be_handled})
+
+    assert {:error, :not_handled} = response
+  end
+
 end

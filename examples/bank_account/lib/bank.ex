@@ -40,4 +40,8 @@ defmodule Bank do
   defp handle({:current_balance_of, "existing_account"}, balance) do
     {{:ok, balance}, balance}
   end
+
+  defp handle(_message, balance) do
+    {{:error, :not_handled}, balance}
+  end
 end
