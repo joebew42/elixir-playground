@@ -1,18 +1,23 @@
-defmodule BankAccount do
-  @moduledoc """
-  Documentation for BankAccount.
-  """
+defmodule Bank do
+  def start() do
+    spawn(fn -> loop(1000) end)
+  end
 
-  @doc """
-  Hello world.
+  def query(bank_pid, {:current_balance_of, "existing_account"}) do
+    send bank_pid, {self(), {:current_balance_of, "existing_account"}}
+    receive do
+      reply -> reply
+    end
+  end
 
-  ## Examples
+  def query(_xxx, _yyy) do
+    {:error, :account_not_exists}
+  end
 
-      iex> BankAccount.hello
-      :world
-
-  """
-  def hello do
-    :world
+  defp loop(balance) do
+    receive do
+      {from, {:current_balance_of, "existing_account"}} ->
+        send from, {:ok, balance}
+    end
   end
 end
