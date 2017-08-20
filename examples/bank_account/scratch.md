@@ -4,8 +4,8 @@
 
 # TODO
 
-* add a catch all handler for not handled messages
-* rename "query" with a more significat name. Maybe we can call it "command", or "call", "action", or "execute", ...
+* add a catch-all handler for not handled messages
+* rename "query" with a more significant name. Maybe we can call it "command", or "call", "action", or "execute", ...
 * take care of the case the server don't reply (timeout)
 * withdrawal money
 * create a new account

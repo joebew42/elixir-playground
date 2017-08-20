@@ -25,20 +25,14 @@ defmodule BankTest do
       assert {:ok, 1000} == response
     end
 
-    test "we are able to deposit 100" do
+    test "we are able to deposit positive amounts" do
       bank_pid = Bank.start()
+      Bank.query(bank_pid, {:deposit, 50, "existing_account"})
       Bank.query(bank_pid, {:deposit, 100, "existing_account"})
-      response = Bank.query(bank_pid, {:current_balance_of, "existing_account"})
-
-      assert {:ok, 1100} == response
-    end
-
-    test "we are able to deposit 200" do
-      bank_pid = Bank.start()
       Bank.query(bank_pid, {:deposit, 200, "existing_account"})
       response = Bank.query(bank_pid, {:current_balance_of, "existing_account"})
 
-      assert {:ok, 1200} == response
+      assert {:ok, 1000 + 50 + 100 + 200} == response
     end
 
     test "we are not able to deposit negative amounts" do
