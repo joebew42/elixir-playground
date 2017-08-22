@@ -49,6 +49,28 @@ defmodule BankTest do
 
       assert {:ok, 1000} == response
     end
+
+    test "we are not able to withdrawal if the amount is greater than current balance" do
+      bank_pid = Bank.start()
+      response = Bank.execute(bank_pid, {:withdrawal, 1001, "existing_account"})
+
+      assert {:error, :withdrawal_not_permitted} == response
+    end
+
+    test "we are not able to withdrawal a negative amount" do
+      bank_pid = Bank.start()
+      response = Bank.execute(bank_pid, {:withdrawal, -1, "existing_account"})
+
+      assert {:error, :withdrawal_not_permitted} == response
+    end
+
+    test "we are able to withdrawal if the amount is lower or equal thant current balance" do
+      bank_pid = Bank.start()
+      Bank.execute(bank_pid, {:withdrawal, 1000, "existing_account"})
+      response = Bank.execute(bank_pid, {:current_balance_of, "existing_account"})
+
+      assert {:ok, 0} == response
+    end
   end
 
   test "returns error when a message cannot be handled" do

@@ -37,6 +37,20 @@ defmodule Bank do
     {{:error, :account_not_exists}, balance}
   end
 
+  defp handle({:withdrawal, amount, "existing_account"}, balance) when amount < 0 do
+    {{:error, :withdrawal_not_permitted}, balance}
+  end
+
+  defp handle({:withdrawal, amount, "existing_account"}, balance) when amount >= 0 do
+    new_balance = balance - amount
+    case new_balance >= 0 do
+      true ->
+        {:ok, new_balance}
+      false ->
+        {{:error, :withdrawal_not_permitted}, balance}
+    end
+  end
+
   defp handle({:current_balance_of, "non_existing_account"}, balance) do
     {{:error, :account_not_exists}, balance}
   end
