@@ -33,6 +33,10 @@ defmodule Bank do
     end
   end
 
+  defp handle({:withdrawal, _amount, "non_existing_account"}, balance) do
+    {{:error, :account_not_exists}, balance}
+  end
+
   defp handle({:current_balance_of, "non_existing_account"}, balance) do
     {{:error, :account_not_exists}, balance}
   end

@@ -15,6 +15,13 @@ defmodule BankTest do
 
       assert {:error, :account_not_exists} == response
     end
+
+    test "we are not able to withdrawal" do
+      bank_pid = Bank.start()
+      response = Bank.execute(bank_pid, {:withdrawal, 1, "non_existing_account"})
+
+      assert {:error, :account_not_exists} == response
+    end
   end
 
   describe "when user exists" do
