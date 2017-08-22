@@ -1,7 +1,7 @@
 defmodule BankTest do
   use ExUnit.Case
 
-  describe "when user does not exists" do
+  describe "when account does not exists" do
     test "we are not able to check current balance" do
       bank_pid = Bank.start()
       response = Bank.execute(bank_pid, {:current_balance_of, "non_existing_account"})
@@ -24,7 +24,7 @@ defmodule BankTest do
     end
   end
 
-  describe "when user exists" do
+  describe "when account exists" do
     test "we are able to check the current balance" do
       bank_pid = Bank.start()
       response = Bank.execute(bank_pid, {:current_balance_of, "existing_account"})
