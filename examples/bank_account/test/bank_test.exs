@@ -9,9 +9,9 @@ defmodule BankTest do
       assert {:error, :account_not_exists} == response
     end
 
-    test "we are not able to deposit money" do
+    test "we are not able to deposit" do
       bank_pid = Bank.start()
-      response = Bank.execute(bank_pid, {:deposit, 100, "non_existing_account"})
+      response = Bank.execute(bank_pid, {:deposit, 1, "non_existing_account"})
 
       assert {:error, :account_not_exists} == response
     end

@@ -19,7 +19,7 @@ defmodule Bank do
     end
   end
 
-  defp handle({:deposit, 100, "non_existing_account"}, balance) do
+  defp handle({:deposit, _amount, "non_existing_account"}, balance) do
     {{:error, :account_not_exists}, balance}
   end
 
