@@ -25,6 +25,13 @@ defmodule BankTest do
   end
 
   describe "when account exists" do
+    test "we are not able to create an account with the same name" do
+      bank_pid = Bank.start()
+      response = Bank.execute(bank_pid, {:create_account, "existing_account"})
+
+      assert {:error, :account_already_exists} == response
+    end
+
     test "we are able to check the current balance" do
       bank_pid = Bank.start()
       response = Bank.execute(bank_pid, {:current_balance_of, "existing_account"})

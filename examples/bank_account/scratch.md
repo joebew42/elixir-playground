@@ -1,10 +1,14 @@
 # DOING
 
-*
+* create a new account
+  * I'm not able to create a new account if it already exists [DONE]
+  * I'm able to create a new account if it not already exists [DOING]
+  * Refactor Test: extract bank process in a setup method
+  * Look at the `state` of the Bank. We have a `balance` before the account exists.
+    Maybe the `balance` is not a detail of the Bank but is a detail of the bank account.
 
 # TODO
 
-* create a new account
 * delete an account
 
 * each account will be a process, in order to deal with it we have to introduce a way to registry processes with name
