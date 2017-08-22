@@ -11,7 +11,7 @@ We are supposed to write a simple program that allows us to manage bank accounts
   * create a new account
   * delete an account
   * check current balance
-  * deposit monesy
+  * deposit money
   * withdrawal money
 
 ## What learned
