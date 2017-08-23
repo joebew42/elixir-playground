@@ -16,4 +16,14 @@ We are supposed to write a simple program that allows us to manage bank accounts
 
 ## What learned
 
-TODO
+**about map**
+
+If you want to use strings as keys you have to use this forms:
+
+map = %{"my_key" => "my value"}
+
+instead of
+
+map = %{"my_key": "my value"}
+
+because when you use the latter form you get the string "my_key" to be converted in symbolized form `:my_key`
