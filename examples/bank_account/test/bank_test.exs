@@ -4,9 +4,11 @@ defmodule BankTest do
   describe "when account does not exists" do
     test "we are able to create a new account" do
       bank_pid = Bank.start()
-      response = Bank.execute(bank_pid, {:create_account, "non_existing_account"})
+      created_response = Bank.execute(bank_pid, {:create_account, "non_existing_account"})
+      already_exists_response = Bank.execute(bank_pid, {:create_account, "non_existing_account"})
 
-      assert {:ok, :account_created} == response
+      assert {:ok, :account_created} == created_response
+      assert {:error, :account_already_exists} == already_exists_response
     end
 
     test "we are not able to check current balance" do
@@ -78,7 +80,7 @@ defmodule BankTest do
       assert {:error, :withdrawal_not_permitted} == response
     end
 
-    test "we are able to withdrawal if the amount is lower or equal thant current balance" do
+    test "we are able to withdrawal if the amount is lower or equal than current balance" do
       bank_pid = Bank.start()
       Bank.execute(bank_pid, {:withdrawal, 1000, "existing_account"})
       response = Bank.execute(bank_pid, {:current_balance_of, "existing_account"})
