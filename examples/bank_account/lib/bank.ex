@@ -23,6 +23,10 @@ defmodule Bank do
     {{:error, :account_already_exists}, balance}
   end
 
+  defp handle({:create_account, _account}, balance) do
+    {{:ok, :account_created}, balance}
+  end
+
   defp handle({:deposit, _amount, "non_existing_account"}, balance) do
     {{:error, :account_not_exists}, balance}
   end

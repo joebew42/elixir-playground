@@ -2,6 +2,13 @@ defmodule BankTest do
   use ExUnit.Case
 
   describe "when account does not exists" do
+    test "we are able to create a new account" do
+      bank_pid = Bank.start()
+      response = Bank.execute(bank_pid, {:create_account, "non_existing_account"})
+
+      assert {:ok, :account_created} == response
+    end
+
     test "we are not able to check current balance" do
       bank_pid = Bank.start()
       response = Bank.execute(bank_pid, {:current_balance_of, "non_existing_account"})
