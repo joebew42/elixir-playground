@@ -1,6 +1,6 @@
 defmodule Bank do
   def start() do
-    spawn(fn -> loop(1000) end)
+    spawn(fn -> loop(1000, %{"existing_account": nil}) end)
   end
 
   def execute(bank_pid, message) do
@@ -10,28 +10,28 @@ defmodule Bank do
     end
   end
 
-  defp loop(balance) do
+  defp loop(balance, accounts) do
     receive do
       {from, message} ->
-        {reply, new_balance} = handle(message, balance)
+        {reply, new_balance} = handle(message, balance, accounts)
         send from, reply
-        loop(new_balance)
+        loop(new_balance, accounts)
     end
   end
 
-  defp handle({:create_account, "existing_account"}, balance) do
+  defp handle({:create_account, "existing_account"}, balance, _accounts) do
     {{:error, :account_already_exists}, balance}
   end
 
-  defp handle({:create_account, _account}, balance) do
+  defp handle({:create_account, _account}, balance, _accounts) do
     {{:ok, :account_created}, balance}
   end
 
-  defp handle({:deposit, _amount, "non_existing_account"}, balance) do
+  defp handle({:deposit, _amount, "non_existing_account"}, balance, _accounts) do
     {{:error, :account_not_exists}, balance}
   end
 
-  defp handle({:deposit, amount, "existing_account"}, balance) do
+  defp handle({:deposit, amount, "existing_account"}, balance, _accounts) do
     case amount > 0 do
       true ->
         new_balance = balance + amount
@@ -41,15 +41,15 @@ defmodule Bank do
     end
   end
 
-  defp handle({:withdrawal, _amount, "non_existing_account"}, balance) do
+  defp handle({:withdrawal, _amount, "non_existing_account"}, balance, _accounts) do
     {{:error, :account_not_exists}, balance}
   end
 
-  defp handle({:withdrawal, amount, "existing_account"}, balance) when amount < 0 do
+  defp handle({:withdrawal, amount, "existing_account"}, balance, _accounts) when amount < 0 do
     {{:error, :withdrawal_not_permitted}, balance}
   end
 
-  defp handle({:withdrawal, amount, "existing_account"}, balance) when amount >= 0 do
+  defp handle({:withdrawal, amount, "existing_account"}, balance, _accounts) when amount >= 0 do
     new_balance = balance - amount
     case new_balance >= 0 do
       true ->
@@ -59,15 +59,15 @@ defmodule Bank do
     end
   end
 
-  defp handle({:current_balance_of, "non_existing_account"}, balance) do
+  defp handle({:current_balance_of, "non_existing_account"}, balance, _accounts) do
     {{:error, :account_not_exists}, balance}
   end
 
-  defp handle({:current_balance_of, "existing_account"}, balance) do
+  defp handle({:current_balance_of, "existing_account"}, balance, _accounts) do
     {{:ok, balance}, balance}
   end
 
-  defp handle(_message, balance) do
+  defp handle(_message, balance, _accounts) do
     {{:error, :not_handled}, balance}
   end
 end
