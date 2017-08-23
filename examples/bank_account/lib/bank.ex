@@ -1,6 +1,6 @@
 defmodule Bank do
   def start() do
-    spawn(fn -> loop(1000, %{"existing_account": nil}) end)
+    spawn(fn -> loop(1000, %{"existing_account" => nil}) end)
   end
 
   def execute(bank_pid, message) do
@@ -19,12 +19,9 @@ defmodule Bank do
     end
   end
 
-  defp handle({:create_account, "existing_account"}, balance, _accounts) do
-    {{:error, :account_already_exists}, balance}
-  end
-
-  defp handle({:create_account, _account}, balance, _accounts) do
-    {{:ok, :account_created}, balance}
+  defp handle({:create_account, account}, balance, accounts) do
+    response = create_account(account, accounts)
+    {response, balance}
   end
 
   defp handle({:deposit, _amount, "non_existing_account"}, balance, _accounts) do
@@ -69,5 +66,16 @@ defmodule Bank do
 
   defp handle(_message, balance, _accounts) do
     {{:error, :not_handled}, balance}
+  end
+
+  defp create_account(account, accounts) do
+    case exists?(account, accounts) do
+      true -> {:error, :account_already_exists}
+      false -> {:ok, :account_created}
+    end
+  end
+
+  defp exists?(account, accounts) do
+    Map.has_key?(accounts, account)
   end
 end
