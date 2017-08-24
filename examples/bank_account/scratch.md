@@ -4,7 +4,8 @@
   * I'm not able to create a new account if it already exists [DONE]
   * I'm able to create a new account if it not already exists [DONE]
   * Introduce a map in order to store existing_account [DONE]
-  * Refactor Test: extract bank process in a setup method [DOING]
+  * Refactor Test: extract bank process in a setup method [DONE]
+  * Replace `existing_account` and `non_existing_account` with a variable and then checks if accounts exists or not [TODO]
   * Refactor: Look at the `state` of the Bank. We have a `balance` before that the account is created.
     Maybe the `balance` is not a detail of the `Bank` but is a detail of the bank account.
 
