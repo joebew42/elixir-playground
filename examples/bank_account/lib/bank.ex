@@ -1,7 +1,6 @@
 defmodule Bank do
   def start() do
-    initial_accounts = %{"existing_account" => nil}
-    spawn(fn -> loop(1000, initial_accounts) end)
+    spawn(fn -> loop(1000, %{}) end)
   end
 
   def execute(bank_pid, message) do

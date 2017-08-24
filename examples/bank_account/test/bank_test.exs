@@ -39,6 +39,8 @@ defmodule BankTest do
 
     setup do
       bank_pid = Bank.start()
+      Bank.execute(bank_pid, {:create_account, "existing_account"})
+
       %{bank_pid: bank_pid}
     end
 
