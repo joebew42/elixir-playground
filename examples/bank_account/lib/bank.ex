@@ -24,6 +24,14 @@ defmodule Bank do
     {response, balance, new_accounts}
   end
 
+  defp handle({:current_balance_of, "non_existing_account"}, balance, accounts) do
+    {{:error, :account_not_exists}, balance, accounts}
+  end
+
+  defp handle({:current_balance_of, "existing_account"}, balance, accounts) do
+    {{:ok, balance}, balance, accounts}
+  end
+
   defp handle({:deposit, _amount, "non_existing_account"}, balance, accounts) do
     {{:error, :account_not_exists}, balance, accounts}
   end
@@ -54,14 +62,6 @@ defmodule Bank do
       false ->
         {{:error, :withdrawal_not_permitted}, balance, accounts}
     end
-  end
-
-  defp handle({:current_balance_of, "non_existing_account"}, balance, accounts) do
-    {{:error, :account_not_exists}, balance, accounts}
-  end
-
-  defp handle({:current_balance_of, "existing_account"}, balance, accounts) do
-    {{:ok, balance}, balance, accounts}
   end
 
   defp handle(_message, balance, accounts) do
