@@ -31,17 +31,17 @@ defmodule Bank do
     end
   end
 
-  defp handle({:deposit, _amount, "non_existing_account"}, balance, accounts) do
-    {{:error, :account_not_exists}, balance, accounts}
-  end
-
-  defp handle({:deposit, amount, "existing_account"}, balance, accounts) do
-    case amount > 0 do
+  defp handle({:deposit, amount, account}, balance, accounts) do
+    case exists?(account, accounts) do
+      false -> {{:error, :account_not_exists}, balance, accounts}
       true ->
-        new_balance = balance + amount
-        {:ok, new_balance, accounts}
-      false ->
-        {:ok, balance, accounts}
+        case amount > 0 do
+          true ->
+            new_balance = balance + amount
+            {:ok, new_balance, accounts}
+          false ->
+            {:ok, balance, accounts}
+        end
     end
   end
 
