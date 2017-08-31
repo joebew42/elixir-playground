@@ -34,14 +34,7 @@ defmodule Bank do
   defp handle({:deposit, amount, account}, balance, accounts) do
     case exists?(account, accounts) do
       false -> {{:error, :account_not_exists}, balance, accounts}
-      true ->
-        case amount > 0 do
-          true ->
-            new_balance = balance + amount
-            {:ok, new_balance, accounts}
-          false ->
-            {:ok, balance, accounts}
-        end
+      true -> {:ok, deposit(amount, balance), accounts}
     end
   end
 
@@ -73,6 +66,13 @@ defmodule Bank do
       false ->
         new_accounts = Map.put(accounts, account, nil)
         {{:ok, :account_created}, new_accounts}
+    end
+  end
+
+  defp deposit(amount, balance) do
+    case amount > 0 do
+      true -> balance + amount
+      false -> balance
     end
   end
 
