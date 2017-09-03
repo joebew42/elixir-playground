@@ -2,12 +2,6 @@
 
 * create a new account
 
-* check the current balance by reading the state of the account instead of the state of the bank
-
-Look at the `state` of the Bank.
-We have a `balance` before that the account is created.
-Maybe the `balance` is not a detail of the `Bank` but is a detail of the bank account.
-
 
 can handle only one account
 
@@ -22,6 +16,8 @@ bank -> accounts -> balance
 
 # DONE
 
+* remove the `balance` state from the bank
+* check the current balance by reading the state of the account instead of the state of the bank
 * naming tests: rename the term `user` with the term `account`
 * withdrawal money
 * rename "query" with a more significant name. Maybe we can call it "command", or "call", "action", or "execute", ...

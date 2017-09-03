@@ -1,6 +1,6 @@
 defmodule Bank do
   def start() do
-    spawn(fn -> loop(1000, %{}) end)
+    spawn(fn -> loop(%{}) end)
   end
 
   def execute(bank_pid, message) do
@@ -10,45 +10,45 @@ defmodule Bank do
     end
   end
 
-  defp loop(balance, accounts) do
+  defp loop(accounts) do
     receive do
       {from, message} ->
-        {reply, new_balance, new_accounts} = handle(message, balance, accounts)
+        {reply, new_accounts} = handle(message, accounts)
         send from, reply
-        loop(new_balance, new_accounts)
+        loop(new_accounts)
     end
   end
 
-  defp handle({:create_account, account}, balance, accounts) do
+  defp handle({:create_account, account}, accounts) do
     {response, new_accounts} = create_account(account, accounts)
-    {response, balance, new_accounts}
+    {response, new_accounts}
   end
 
-  defp handle({:current_balance_of, account}, balance, accounts) do
+  defp handle({:current_balance_of, account}, accounts) do
     case exists?(account, accounts) do
-      false -> {{:error, :account_not_exists}, balance, accounts}
-      true -> {{:ok, current_balance_of(account, accounts)}, balance, accounts}
+      false -> {{:error, :account_not_exists}, accounts}
+      true -> {{:ok, current_balance_of(account, accounts)}, accounts}
     end
   end
 
-  defp handle({:deposit, amount, account}, balance, accounts) do
+  defp handle({:deposit, amount, account}, accounts) do
     case exists?(account, accounts) do
-      false -> {{:error, :account_not_exists}, balance, accounts}
-      true -> {:ok, balance, deposit(amount, account, accounts)}
+      false -> {{:error, :account_not_exists}, accounts}
+      true -> {:ok, deposit(amount, account, accounts)}
     end
   end
 
-  defp handle({:withdrawal, amount, account}, balance, accounts) do
+  defp handle({:withdrawal, amount, account}, accounts) do
     case exists?(account, accounts) do
-      false -> {{:error, :account_not_exists}, balance, accounts}
+      false -> {{:error, :account_not_exists}, accounts}
       true ->
         {message, new_accounts} = withdrawal(amount, account, accounts)
-        {message, balance, new_accounts}
+        {message, new_accounts}
     end
   end
 
-  defp handle(_message, balance, accounts) do
-    {{:error, :not_handled}, balance, accounts}
+  defp handle(_message, accounts) do
+    {{:error, :not_handled}, accounts}
   end
 
   defp create_account(account, accounts) do
