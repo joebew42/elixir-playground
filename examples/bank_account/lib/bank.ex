@@ -27,14 +27,14 @@ defmodule Bank do
   defp handle({:current_balance_of, account}, balance, accounts) do
     case exists?(account, accounts) do
       false -> {{:error, :account_not_exists}, balance, accounts}
-      true -> {{:ok, balance}, balance, accounts}
+      true -> {{:ok, current_balance_of(account, accounts)}, balance, accounts}
     end
   end
 
   defp handle({:deposit, amount, account}, balance, accounts) do
     case exists?(account, accounts) do
       false -> {{:error, :account_not_exists}, balance, accounts}
-      true -> {:ok, deposit(amount, balance), accounts}
+      true -> {:ok, balance, deposit(amount, account, accounts)}
     end
   end
 
@@ -42,8 +42,8 @@ defmodule Bank do
     case exists?(account, accounts) do
       false -> {{:error, :account_not_exists}, balance, accounts}
       true ->
-        {message, new_balance} = withdrawal(amount, balance)
-        {message, new_balance, accounts}
+        {message, new_accounts} = withdrawal(amount, account, accounts)
+        {message, balance, new_accounts}
     end
   end
 
@@ -55,27 +55,34 @@ defmodule Bank do
     case exists?(account, accounts) do
       true -> {{:error, :account_already_exists}, accounts}
       false ->
-        new_accounts = Map.put(accounts, account, nil)
+        new_accounts = Map.put(accounts, account, 1000)
         {{:ok, :account_created}, new_accounts}
     end
   end
 
-  defp deposit(amount, balance) do
+  def current_balance_of(account, accounts) do
+    Map.get(accounts, account)
+  end
+
+  defp deposit(amount, account, accounts) do
     case amount > 0 do
-      true -> balance + amount
-      false -> balance
+      true ->
+        new_balance = Map.get(accounts, account) + amount
+        Map.put(accounts, account, new_balance)
+      false -> accounts
     end
   end
 
-  defp withdrawal(amount, balance) when amount < 0 do
-    {{:error, :withdrawal_not_permitted}, balance}
+  defp withdrawal(amount, _account, accounts) when amount < 0 do
+    {{:error, :withdrawal_not_permitted}, accounts}
   end
 
-  defp withdrawal(amount, balance) when amount >= 0 do
-    new_balance = balance - amount
+  defp withdrawal(amount, account, accounts) when amount >= 0 do
+    current_balance = Map.get(accounts, account)
+    new_balance = current_balance - amount
     case new_balance >= 0 do
-      true -> {:ok, new_balance}
-      false -> {{:error, :withdrawal_not_permitted}, balance}
+      true -> {:ok, Map.put(accounts, account, new_balance)}
+      false -> {{:error, :withdrawal_not_permitted}, accounts}
     end
   end
 

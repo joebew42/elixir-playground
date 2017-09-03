@@ -45,15 +45,6 @@ defmodule BankTest do
       %{bank_pid: bank_pid}
     end
 
-    @tag :skip
-    test "we are able to perform actions on different accounts", %{bank_pid: bank_pid} do
-      Bank.execute(bank_pid, {:deposit, 100, "existing_account"})
-      Bank.execute(bank_pid, {:withdrawal, 100, "other_existing_account"})
-
-      assert {:ok, 1100} == Bank.execute(bank_pid, {:current_balance_of, "existing_account"})
-      assert {:ok, 900} == Bank.execute(bank_pid, {:current_balance_of, "other_existing_account"})
-    end
-
     test "we are not able to create an account with the same name", %{bank_pid: bank_pid} do
       response = Bank.execute(bank_pid, {:create_account, "existing_account"})
 
@@ -99,6 +90,14 @@ defmodule BankTest do
       response = Bank.execute(bank_pid, {:current_balance_of, "existing_account"})
 
       assert {:ok, 0} == response
+    end
+
+    test "we are able to perform actions on different accounts", %{bank_pid: bank_pid} do
+      Bank.execute(bank_pid, {:deposit, 100, "existing_account"})
+      Bank.execute(bank_pid, {:withdrawal, 100, "other_existing_account"})
+
+      assert {:ok, 1100} == Bank.execute(bank_pid, {:current_balance_of, "existing_account"})
+      assert {:ok, 900} == Bank.execute(bank_pid, {:current_balance_of, "other_existing_account"})
     end
   end
 
