@@ -45,6 +45,7 @@ defmodule BankTest do
       %{bank_pid: bank_pid}
     end
 
+    @tag :skip
     test "we are able to perform actions on different accounts", %{bank_pid: bank_pid} do
       Bank.execute(bank_pid, {:deposit, 100, "existing_account"})
       Bank.execute(bank_pid, {:withdrawal, 100, "other_existing_account"})

@@ -1,14 +1,15 @@
 # DOING
 
 * create a new account
-  * Refactor: Look at the `state` of the Bank. We have a `balance` before that the account is created.
+* Refactor:
+    Look at the `state` of the Bank.
+    We have a `balance` before that the account is created.
     Maybe the `balance` is not a detail of the `Bank` but is a detail of the bank account.
 
 
 can handle only one account
 
-bank -> accounts
-     -> balance
+bank -> accounts -> balance
 
 # TODO
 
