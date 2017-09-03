@@ -4,6 +4,7 @@
 
 # TODO
 
+* what learned: how to skip tests
 * what to do when a process dies (introduce a kind of supervisor)
 
 # DONE
