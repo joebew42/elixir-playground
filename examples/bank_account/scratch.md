@@ -1,10 +1,9 @@
 # DOING
 
-
+* each account may be a process
 
 # TODO
 
-* each account will be a process
 * what to do when a process dies (introduce a kind of supervisor)
 
 # DONE
