@@ -70,7 +70,7 @@ defmodule Bank do
     end
   end
 
-  def current_balance_of(account, accounts) do
+  defp current_balance_of(account, accounts) do
     Map.get(accounts, account)
   end
 
