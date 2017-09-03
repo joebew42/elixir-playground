@@ -1,6 +1,6 @@
 # DOING
 
-* delete an account
+
 
 # TODO
 
@@ -9,6 +9,7 @@
 
 # DONE
 
+* delete an account
 * create a new account
 * remove the `balance` state from the bank
 * check the current balance by reading the state of the account instead of the state of the bank

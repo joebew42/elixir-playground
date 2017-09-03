@@ -20,15 +20,11 @@ defmodule Bank do
   end
 
   defp handle({:create_account, account}, accounts) do
-    {response, new_accounts} = create_account(account, accounts)
-    {response, new_accounts}
+    create_account(account, accounts)
   end
 
   defp handle({:delete_account, account}, accounts) do
-    case exists?(account, accounts) do
-      false -> {{:error, :account_not_exists}, accounts}
-      true -> {{:ok, :account_deleted}, Map.delete(accounts, account)}
-    end
+    delete_account(account, accounts)
   end
 
   defp handle({:current_balance_of, account}, accounts) do
@@ -64,6 +60,13 @@ defmodule Bank do
       false ->
         new_accounts = Map.put(accounts, account, 1000)
         {{:ok, :account_created}, new_accounts}
+    end
+  end
+
+  defp delete_account(account, accounts) do
+    case exists?(account, accounts) do
+      false -> {{:error, :account_not_exists}, accounts}
+      true -> {{:ok, :account_deleted}, Map.delete(accounts, account)}
     end
   end
 
