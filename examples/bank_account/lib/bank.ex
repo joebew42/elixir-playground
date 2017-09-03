@@ -24,6 +24,13 @@ defmodule Bank do
     {response, new_accounts}
   end
 
+  defp handle({:delete_account, account}, accounts) do
+    case exists?(account, accounts) do
+      false -> {{:error, :account_not_exists}, accounts}
+      true -> {{:ok, :account_deleted}, Map.delete(accounts, account)}
+    end
+  end
+
   defp handle({:current_balance_of, account}, accounts) do
     case exists?(account, accounts) do
       false -> {{:error, :account_not_exists}, accounts}

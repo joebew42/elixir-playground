@@ -1,21 +1,15 @@
 # DOING
 
-* create a new account
-
-
-can handle only one account
-
-bank -> accounts -> balance
+* delete an account
 
 # TODO
 
-* delete an account
-
-* each account will be a process, in order to deal with it we have to introduce a way to registry processes with name
-* what to do when a process dies (introduce a kind of supervision)
+* each account will be a process
+* what to do when a process dies (introduce a kind of supervisor)
 
 # DONE
 
+* create a new account
 * remove the `balance` state from the bank
 * check the current balance by reading the state of the account instead of the state of the bank
 * naming tests: rename the term `user` with the term `account`

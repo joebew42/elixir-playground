@@ -16,6 +16,12 @@ defmodule BankTest do
       assert {:error, :account_already_exists} == already_exists_response
     end
 
+    test "we are not able to delete an account", %{bank_pid: bank_pid} do
+      response = Bank.execute(bank_pid, {:delete_account, "non_existing_account"})
+
+      assert {:error, :account_not_exists} == response
+    end
+
     test "we are not able to check current balance", %{bank_pid: bank_pid} do
       response = Bank.execute(bank_pid, {:current_balance_of, "non_existing_account"})
 
@@ -49,6 +55,14 @@ defmodule BankTest do
       response = Bank.execute(bank_pid, {:create_account, "existing_account"})
 
       assert {:error, :account_already_exists} == response
+    end
+
+    test "we are able to delete an account", %{bank_pid: bank_pid} do
+      response_account_deleted = Bank.execute(bank_pid, {:delete_account, "existing_account"})
+      response_account_not_exists = Bank.execute(bank_pid, {:delete_account, "existing_account"})
+
+      assert {:ok, :account_deleted} == response_account_deleted
+      assert {:error, :account_not_exists} == response_account_not_exists
     end
 
     test "we are able to check the current balance", %{bank_pid: bank_pid} do
