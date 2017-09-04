@@ -27,3 +27,11 @@ instead of
 map = %{"my_key": "my value"}
 
 because when you use the latter form you get the string "my_key" to be converted in symbolized form `:my_key`
+
+**loading module from iex**
+
+If you want to be able to use modules in iex that are defined in a mix project you can issue this command:
+
+```
+iex -S mix
+```
