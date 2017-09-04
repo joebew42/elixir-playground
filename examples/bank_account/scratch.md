@@ -1,6 +1,6 @@
 # DOING
 
-* each account may be a process
+
 
 # TODO
 
@@ -14,6 +14,7 @@
 
 # DONE
 
+* each account may be a process
 * delete an account
 * create a new account
 * remove the `balance` state from the bank
