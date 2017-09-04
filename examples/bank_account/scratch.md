@@ -1,19 +1,18 @@
 # DOING
 
-
-
 # TODO
 
-* completely rewrite the function `deposit` of `Bank`
+* in `BankAccount` replace conditional with `pattern matching` in the receive block
+* introduce the function `deposit` of `Bank`
 * express withdrawal and balance as commands: `withdraw` and `check_balance`
-* maybe it is better to change the `pid` in something else in BankAccount
+* maybe it is better to change the `pid` in something else in `BankAccount`
 * improve the way delete_account is implemented
-* {message, new_accounts, new_account_processes} = withdrawal(amount, account, accounts, account_processes) remove the binding
 * what learned: how to skip tests
 * what to do when a process dies (introduce a kind of supervisor)
 
 # DONE
 
+* {message, new_accounts, new_account_processes} = withdrawal(amount, account, accounts, account_processes) remove the binding
 * each account may be a process
 * delete an account
 * create a new account

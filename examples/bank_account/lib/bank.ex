@@ -47,9 +47,7 @@ defmodule Bank do
   defp handle({:withdrawal, amount, account}, account_processes) do
     case exists?(account, account_processes) do
       false -> {{:error, :account_not_exists}, account_processes}
-      true ->
-        {message, new_account_processes} = withdrawal(amount, account, account_processes)
-        {message, new_account_processes}
+      true -> withdrawal(amount, account, account_processes)
     end
   end
 
