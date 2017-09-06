@@ -1,16 +1,20 @@
 # DOING
 
+
+
 # TODO
 
+* expose a client interface to `Bank` (encapsulation) in order to hide details about the message
 * introduce the function `deposit` of `Bank`
-* express withdrawal and balance as commands: `withdraw` and `check_balance`
 * maybe it is better to change the `pid` in something else in `BankAccount`
 * improve the way delete_account is implemented
-* what learned: how to skip tests
+* update the "what learned" session by adding "how to skip tests"
+
 * what to do when a process dies (introduce a kind of supervisor)
 
 # DONE
 
+* express withdrawal and balance as commands: `withdraw` and `check_balance`
 * in `BankAccount` replace conditional with `pattern matching` in the receive block
 * {message, new_accounts, new_account_processes} = withdrawal(amount, account, accounts, account_processes) remove the binding
 * each account may be a process

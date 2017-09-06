@@ -27,11 +27,11 @@ defmodule BankAccount do
     deposit(amount, balance)
   end
 
-  defp handle({:withdrawal, amount}, balance) do
+  defp handle({:withdraw, amount}, balance) do
     withdrawal(amount, balance)
   end
 
-  defp handle({:balance}, balance) do
+  defp handle({:check_balance}, balance) do
     {balance, balance}
   end
 

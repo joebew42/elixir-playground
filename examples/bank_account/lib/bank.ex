@@ -27,10 +27,10 @@ defmodule Bank do
     delete_account(account, account_processes)
   end
 
-  defp handle({:current_balance_of, account}, account_processes) do
+  defp handle({:check_balance, account}, account_processes) do
     case exists?(account, account_processes) do
       false -> {{:error, :account_not_exists}, account_processes}
-      true -> {{:ok, current_balance_of(account, account_processes)}, account_processes}
+      true -> {{:ok, check_balance(account, account_processes)}, account_processes}
     end
   end
 
@@ -44,10 +44,10 @@ defmodule Bank do
     end
   end
 
-  defp handle({:withdrawal, amount, account}, account_processes) do
+  defp handle({:withdraw, amount, account}, account_processes) do
     case exists?(account, account_processes) do
       false -> {{:error, :account_not_exists}, account_processes}
-      true -> withdrawal(amount, account, account_processes)
+      true -> withdraw(amount, account, account_processes)
     end
   end
 
@@ -78,14 +78,14 @@ defmodule Bank do
     end
   end
 
-  defp current_balance_of(account, account_processes) do
+  defp check_balance(account, account_processes) do
     bank_account = Map.get(account_processes, account)
-    BankAccount.execute(bank_account, {:balance})
+    BankAccount.execute(bank_account, {:check_balance})
   end
 
-  defp withdrawal(amount, account, account_processes) do
+  defp withdraw(amount, account, account_processes) do
     bank_account = Map.get(account_processes, account)
-    response = BankAccount.execute(bank_account, {:withdrawal, amount})
+    response = BankAccount.execute(bank_account, {:withdraw, amount})
     {response, account_processes}
   end
 
