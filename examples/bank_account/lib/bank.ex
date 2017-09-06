@@ -3,7 +3,27 @@ defmodule Bank do
     spawn(fn -> loop(%{}) end)
   end
 
-  def execute(bank_pid, message) do
+  def createAccount(bank_id, account) do
+    execute(bank_id, {:create_account, account})
+  end
+
+  def deleteAccount(bank_id, account) do
+    execute(bank_id, {:delete_account, account})
+  end
+
+  def checkBalance(bank_id, account) do
+    execute(bank_id, {:check_balance, account})
+  end
+
+  def deposit(bank_id, amount, account) do
+    execute(bank_id, {:deposit, amount, account})
+  end
+
+  def withdraw(bank_id, amount, account) do
+    execute(bank_id, {:withdraw, amount, account})
+  end
+
+  defp execute(bank_pid, message) do
     send bank_pid, {self(), message}
     receive do
       reply -> reply
@@ -47,7 +67,7 @@ defmodule Bank do
   defp handle({:withdraw, amount, account}, account_processes) do
     case exists?(account, account_processes) do
       false -> {{:error, :account_not_exists}, account_processes}
-      true -> withdraw(amount, account, account_processes)
+      true -> server_withdraw(amount, account, account_processes)
     end
   end
 
@@ -83,7 +103,7 @@ defmodule Bank do
     BankAccount.execute(bank_account, {:check_balance})
   end
 
-  defp withdraw(amount, account, account_processes) do
+  defp server_withdraw(amount, account, account_processes) do
     bank_account = Map.get(account_processes, account)
     response = BankAccount.execute(bank_account, {:withdraw, amount})
     {response, account_processes}
