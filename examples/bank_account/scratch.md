@@ -2,7 +2,6 @@
 
 # TODO
 
-* in `BankAccount` replace conditional with `pattern matching` in the receive block
 * introduce the function `deposit` of `Bank`
 * express withdrawal and balance as commands: `withdraw` and `check_balance`
 * maybe it is better to change the `pid` in something else in `BankAccount`
@@ -12,6 +11,7 @@
 
 # DONE
 
+* in `BankAccount` replace conditional with `pattern matching` in the receive block
 * {message, new_accounts, new_account_processes} = withdrawal(amount, account, accounts, account_processes) remove the binding
 * each account may be a process
 * delete an account

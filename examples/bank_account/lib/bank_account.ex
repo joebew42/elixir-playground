@@ -16,18 +16,23 @@ defmodule BankAccount do
 
   defp loop(balance) do
     receive do
-      {from, {:deposit, amount}} ->
-        {response, new_balance} = deposit(amount, balance)
-        send from, :ok
-        loop(new_balance)
-      {from, {:withdrawal, amount}} ->
-        {response, new_balance} = withdrawal(amount, balance)
+      {from, message} ->
+        {response, new_balance} = handle(message, balance)
         send from, response
         loop(new_balance)
-      {from, {:balance}} ->
-        send from, balance
-        loop(balance)
     end
+  end
+
+  defp handle({:deposit, amount}, balance) do
+    deposit(amount, balance)
+  end
+
+  defp handle({:withdrawal, amount}, balance) do
+    withdrawal(amount, balance)
+  end
+
+  defp handle({:balance}, balance) do
+    {balance, balance}
   end
 
   defp deposit(amount, balance) when amount > 0 do
