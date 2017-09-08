@@ -2,7 +2,7 @@
 
 # TODO
 
-* maybe it is better to change the `pid` in something else in `BankAccount`
+* maybe it is better to change the confusing `bank_id` to a more readable `bank_pid`
 * update the "what learned" session in the `README.md` by adding "how to skip tests" in Elixir/ExUnit
 
 * maybe should be better to separate the tests of the `Bank` client from the `BankServer` (in other episode)
@@ -10,6 +10,7 @@
 
 # DONE
 
+* maybe it is better to change the `pid` in something else in `BankAccount`
 * rename `account_processes` to a more generic `accounts`
 * separate the client side of the `BankAccount` from the server side
 * expose a client interface to `BankAccount` (encapsulation) in order to hide details about the message
