@@ -3,24 +3,24 @@ defmodule Bank do
     spawn(fn -> BankServer.loop(%{}) end)
   end
 
-  def create_account(bank_id, account) do
-    execute(bank_id, {:create_account, account})
+  def create_account(bank_pid, account) do
+    execute(bank_pid, {:create_account, account})
   end
 
-  def delete_account(bank_id, account) do
-    execute(bank_id, {:delete_account, account})
+  def delete_account(bank_pid, account) do
+    execute(bank_pid, {:delete_account, account})
   end
 
-  def check_balance(bank_id, account) do
-    execute(bank_id, {:check_balance, account})
+  def check_balance(bank_pid, account) do
+    execute(bank_pid, {:check_balance, account})
   end
 
-  def deposit(bank_id, amount, account) do
-    execute(bank_id, {:deposit, amount, account})
+  def deposit(bank_pid, amount, account) do
+    execute(bank_pid, {:deposit, amount, account})
   end
 
-  def withdraw(bank_id, amount, account) do
-    execute(bank_id, {:withdraw, amount, account})
+  def withdraw(bank_pid, amount, account) do
+    execute(bank_pid, {:withdraw, amount, account})
   end
 
   defp execute(bank_pid, message) do
