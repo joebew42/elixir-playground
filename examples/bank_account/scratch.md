@@ -2,8 +2,9 @@
 
 # TODO
 
+* maybe the handle for not handled messages can be removed
+* rename `account_processes` to a more generic `accounts`
 * maybe should be better to separate the tests of the `Bank` client from the `BankServer`
-* decouple the `handle` functions from the `domain logic`
 * expose a client interface to `BankAccount` (encapsulation) in order to hide details about the message
 * maybe it is better to change the `pid` in something else in `BankAccount`
 * improve the way delete_account is implemented
@@ -13,6 +14,7 @@
 
 # DONE
 
+* decouple the `handle` functions from the `domain logic`
 * make the `--trace` option to be the default when executing `mix test`
 * use snake case instead of camel case for functions name
 * separate Bank client from Bank server (this will fix collision with function names, see the `server_withdraw`)

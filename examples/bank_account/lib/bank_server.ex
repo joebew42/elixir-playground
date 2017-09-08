@@ -17,27 +17,15 @@ defmodule BankServer do
   end
 
   defp handle({:check_balance, account}, account_processes) do
-    case exists?(account, account_processes) do
-      false -> {{:error, :account_not_exists}, account_processes}
-      true -> {{:ok, check_balance(account, account_processes)}, account_processes}
-    end
+    check_balance(account, account_processes)
   end
 
   defp handle({:deposit, amount, account}, account_processes) do
-    case exists?(account, account_processes) do
-      false -> {{:error, :account_not_exists}, account_processes}
-      true ->
-        bank_account = Map.get(account_processes, account)
-        BankAccount.execute(bank_account, {:deposit, amount})
-        {:ok, account_processes}
-    end
+    deposit(amount, account, account_processes)
   end
 
   defp handle({:withdraw, amount, account}, account_processes) do
-    case exists?(account, account_processes) do
-      false -> {{:error, :account_not_exists}, account_processes}
-      true -> withdraw(amount, account, account_processes)
-    end
+    withdraw(amount, account, account_processes)
   end
 
   defp handle(_message, account_processes) do
@@ -67,15 +55,34 @@ defmodule BankServer do
     end
   end
 
-  defp check_balance(account, account_processes) do
-    bank_account = Map.get(account_processes, account)
-    BankAccount.execute(bank_account, {:check_balance})
+  defp check_balance(account, accounts) do
+    case exists?(account, accounts) do
+      false -> {{:error, :account_not_exists}, accounts}
+      true ->
+        bank_account = Map.get(accounts, account)
+        response = BankAccount.execute(bank_account, {:check_balance})
+        {{:ok, response}, accounts}
+    end
   end
 
-  defp withdraw(amount, account, account_processes) do
-    bank_account = Map.get(account_processes, account)
-    response = BankAccount.execute(bank_account, {:withdraw, amount})
-    {response, account_processes}
+  defp deposit(amount, account, accounts) do
+    case exists?(account, accounts) do
+      false -> {{:error, :account_not_exists}, accounts}
+      true ->
+        bank_account = Map.get(accounts, account)
+        BankAccount.execute(bank_account, {:deposit, amount})
+        {:ok, accounts}
+    end
+  end
+
+  defp withdraw(amount, account, accounts) do
+    case exists?(account, accounts) do
+      false -> {{:error, :account_not_exists}, accounts}
+      true ->
+        bank_account = Map.get(accounts, account)
+        response = BankAccount.execute(bank_account, {:withdraw, amount})
+        {response, accounts}
+    end
   end
 
   defp exists?(account, account_processes) do
