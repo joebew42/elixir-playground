@@ -36,7 +36,7 @@ defmodule BankServer do
   defp handle({:withdraw, amount, account}, account_processes) do
     case exists?(account, account_processes) do
       false -> {{:error, :account_not_exists}, account_processes}
-      true -> server_withdraw(amount, account, account_processes)
+      true -> withdraw(amount, account, account_processes)
     end
   end
 
@@ -72,7 +72,7 @@ defmodule BankServer do
     BankAccount.execute(bank_account, {:check_balance})
   end
 
-  defp server_withdraw(amount, account, account_processes) do
+  defp withdraw(amount, account, account_processes) do
     bank_account = Map.get(account_processes, account)
     response = BankAccount.execute(bank_account, {:withdraw, amount})
     {response, account_processes}

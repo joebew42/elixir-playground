@@ -4,7 +4,6 @@
 
 * maybe should be better to separate the tests from `Bank` and `BankServer`
 * add the `--trace` option to be default when executing `mix test`
-* use snake case instead of camel case for functions name
 * decouple the `handle` functions from the `domain logic`
 * expose a client interface to `BankAccount` (encapsulation) in order to hide details about the message
 * maybe it is better to change the `pid` in something else in `BankAccount`
@@ -15,6 +14,7 @@
 
 # DONE
 
+* use snake case instead of camel case for functions name
 * separate Bank client from Bank server (this will fix collision with function names, see the `server_withdraw`)
 * expose a client interface to `Bank` (encapsulation) in order to hide details about the message
 * express withdrawal and balance as commands: `withdraw` and `check_balance`
