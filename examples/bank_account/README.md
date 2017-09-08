@@ -43,3 +43,22 @@ edit `test_helper.ex`:
 ```
 ExUnit.start(trace: true)
 ```
+
+*how to skip tests in ExUnit*
+
+edit `test_helper.ex`
+
+```
+ExUnit.start(exclude: [:skip])
+```
+
+and use the tag skip in the tests
+
+```
+...
+  @tag :skip
+  test "something should happens ..." do
+    ...
+  end
+...
+```

@@ -2,13 +2,12 @@
 
 # TODO
 
-* update the "what learned" session in the `README.md` by adding "how to skip tests" in Elixir/ExUnit
-
 * maybe should be better to separate the tests of the `Bank` client from the `BankServer` (in other episode)
 * what to do when a process dies (introduce a kind of supervisor)
 
 # DONE
 
+* update the "what learned" session in the `README.md` by adding "how to skip tests" in Elixir/ExUnit
 * maybe it is better to change the confusing `bank_id` to a more readable `bank_pid`
 * maybe it is better to change the `pid` in something else in `BankAccount`
 * rename `account_processes` to a more generic `accounts`
