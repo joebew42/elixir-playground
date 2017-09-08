@@ -2,7 +2,8 @@
 
 # TODO
 
-* separate Bank client from Bank server (this will fix collision with function names, see the `server_withdraw`)
+* maybe should be better to separate the tests from `Bank` and `BankServer`
+* add the `--trace` option to be default when executing `mix test`
 * use snake case instead of camel case for functions name
 * decouple the `handle` functions from the `domain logic`
 * expose a client interface to `BankAccount` (encapsulation) in order to hide details about the message
@@ -14,6 +15,7 @@
 
 # DONE
 
+* separate Bank client from Bank server (this will fix collision with function names, see the `server_withdraw`)
 * expose a client interface to `Bank` (encapsulation) in order to hide details about the message
 * express withdrawal and balance as commands: `withdraw` and `check_balance`
 * in `BankAccount` replace conditional with `pattern matching` in the receive block
