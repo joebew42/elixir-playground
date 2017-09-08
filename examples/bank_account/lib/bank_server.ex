@@ -56,7 +56,7 @@ defmodule BankServer do
       false -> {{:error, :account_not_exists}, accounts}
       true ->
         bank_account = Map.get(accounts, account)
-        response = BankAccount.execute(bank_account, {:check_balance})
+        response = BankAccount.check_balance(bank_account)
         {{:ok, response}, accounts}
     end
   end
@@ -66,7 +66,7 @@ defmodule BankServer do
       false -> {{:error, :account_not_exists}, accounts}
       true ->
         bank_account = Map.get(accounts, account)
-        BankAccount.execute(bank_account, {:deposit, amount})
+        BankAccount.deposit(bank_account, amount)
         {:ok, accounts}
     end
   end
@@ -76,7 +76,7 @@ defmodule BankServer do
       false -> {{:error, :account_not_exists}, accounts}
       true ->
         bank_account = Map.get(accounts, account)
-        response = BankAccount.execute(bank_account, {:withdraw, amount})
+        response = BankAccount.withdraw(bank_account, amount)
         {response, accounts}
     end
   end
