@@ -35,3 +35,11 @@ If you want to be able to use modules in iex that are defined in a mix project y
 ```
 iex -S mix
 ```
+
+**make --trace option default**
+
+edit `test_helper.ex`:
+
+```
+ExUnit.start(trace: true)
+```
