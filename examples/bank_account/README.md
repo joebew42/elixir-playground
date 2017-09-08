@@ -44,7 +44,7 @@ edit `test_helper.ex`:
 ExUnit.start(trace: true)
 ```
 
-*how to skip tests in ExUnit*
+**how to skip tests in ExUnit**
 
 edit `test_helper.ex`
 
