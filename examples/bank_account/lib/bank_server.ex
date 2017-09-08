@@ -1,52 +1,52 @@
 defmodule BankServer do
-  def loop(account_processes) do
+  def loop(accounts) do
     receive do
       {from, message} ->
-        {reply, new_account_processes} = handle(message, account_processes)
+        {reply, new_accounts} = handle(message, accounts)
         send from, reply
-        loop(new_account_processes)
+        loop(new_accounts)
     end
   end
 
-  defp handle({:create_account, account}, account_processes) do
-    create_account(account, account_processes)
+  defp handle({:create_account, account}, accounts) do
+    create_account(account, accounts)
   end
 
-  defp handle({:delete_account, account}, account_processes) do
-    delete_account(account, account_processes)
+  defp handle({:delete_account, account}, accounts) do
+    delete_account(account, accounts)
   end
 
-  defp handle({:check_balance, account}, account_processes) do
-    check_balance(account, account_processes)
+  defp handle({:check_balance, account}, accounts) do
+    check_balance(account, accounts)
   end
 
-  defp handle({:deposit, amount, account}, account_processes) do
-    deposit(amount, account, account_processes)
+  defp handle({:deposit, amount, account}, accounts) do
+    deposit(amount, account, accounts)
   end
 
-  defp handle({:withdraw, amount, account}, account_processes) do
-    withdraw(amount, account, account_processes)
+  defp handle({:withdraw, amount, account}, accounts) do
+    withdraw(amount, account, accounts)
   end
 
-  defp create_account(account, account_processes) do
-    case exists?(account, account_processes) do
-      true -> {{:error, :account_already_exists}, account_processes}
+  defp create_account(account, accounts) do
+    case exists?(account, accounts) do
+      true -> {{:error, :account_already_exists}, accounts}
       false ->
         bank_account = BankAccount.start()
-        new_account_processes = Map.put(account_processes, account, bank_account)
-        {{:ok, :account_created}, new_account_processes}
+        new_accounts = Map.put(accounts, account, bank_account)
+        {{:ok, :account_created}, new_accounts}
     end
   end
 
-  defp delete_account(account, account_processes) do
-    case exists?(account, account_processes) do
-      false -> {{:error, :account_not_exists}, account_processes}
+  defp delete_account(account, accounts) do
+    case exists?(account, accounts) do
+      false -> {{:error, :account_not_exists}, accounts}
       true ->
-        bank_account = Map.get(account_processes, account)
+        bank_account = Map.get(accounts, account)
         if BankAccount.stop(bank_account) do
-          {{:ok, :account_deleted}, Map.delete(account_processes, account)}
+          {{:ok, :account_deleted}, Map.delete(accounts, account)}
         else
-          {{:ok, :account_deleted}, account_processes}
+          {{:ok, :account_deleted}, accounts}
         end
     end
   end
@@ -81,7 +81,7 @@ defmodule BankServer do
     end
   end
 
-  defp exists?(account, account_processes) do
-    Map.has_key?(account_processes, account)
+  defp exists?(account, accounts) do
+    Map.has_key?(accounts, account)
   end
 end

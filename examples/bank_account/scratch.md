@@ -2,16 +2,15 @@
 
 # TODO
 
-* rename `account_processes` to a more generic `accounts`
 * maybe it is better to change the `pid` in something else in `BankAccount`
 * update the "what learned" session in the `README.md` by adding "how to skip tests" in Elixir/ExUnit
 
 * maybe should be better to separate the tests of the `Bank` client from the `BankServer` (in other episode)
-
 * what to do when a process dies (introduce a kind of supervisor)
 
 # DONE
 
+* rename `account_processes` to a more generic `accounts`
 * separate the client side of the `BankAccount` from the server side
 * expose a client interface to `BankAccount` (encapsulation) in order to hide details about the message
 * maybe the handler for not handled messages can be removed
