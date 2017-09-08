@@ -2,7 +2,6 @@
 
 # TODO
 
-* maybe the handle for not handled messages can be removed
 * rename `account_processes` to a more generic `accounts`
 * maybe should be better to separate the tests of the `Bank` client from the `BankServer`
 * expose a client interface to `BankAccount` (encapsulation) in order to hide details about the message
@@ -14,6 +13,7 @@
 
 # DONE
 
+* maybe the handler for not handled messages can be removed
 * decouple the `handle` functions from the `domain logic`
 * make the `--trace` option to be the default when executing `mix test`
 * use snake case instead of camel case for functions name

@@ -28,10 +28,6 @@ defmodule BankServer do
     withdraw(amount, account, account_processes)
   end
 
-  defp handle(_message, account_processes) do
-    {{:error, :not_handled}, account_processes}
-  end
-
   defp create_account(account, account_processes) do
     case exists?(account, account_processes) do
       true -> {{:error, :account_already_exists}, account_processes}
