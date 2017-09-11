@@ -1,7 +1,10 @@
 # DOING
 
+
 # TODO
 
-* introduce OTP instead of handling process from scratch
+* decouple the GenServer from our application domain logic
 
 # DONE
+
+* introduce OTP gen_server for the BankServer

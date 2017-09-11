@@ -1,8 +1,4 @@
 defmodule Bank do
-  def start() do
-    spawn(fn -> BankServer.loop(%{}) end)
-  end
-
   def create_account(bank_pid, account) do
     execute(bank_pid, {:create_account, account})
   end
@@ -24,9 +20,6 @@ defmodule Bank do
   end
 
   defp execute(bank_pid, message) do
-    send bank_pid, {self(), message}
-    receive do
-      reply -> reply
-    end
+    GenServer.call(bank_pid, message)
   end
 end
