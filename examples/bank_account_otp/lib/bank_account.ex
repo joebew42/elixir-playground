@@ -1,10 +1,10 @@
 defmodule BankAccount do
   def start() do
-    spawn(fn -> BankAccountServer.loop(1000) end)
+    GenServer.start(BankAccountServer, 1000, [])
   end
 
   def stop(bank_account_pid) do
-    Process.exit(bank_account_pid, :kill)
+    GenServer.stop(bank_account_pid)
   end
 
   def check_balance(bank_account_pid) do
@@ -20,9 +20,6 @@ defmodule BankAccount do
   end
 
   defp execute(bank_account_pid, message) do
-    send bank_account_pid, {self(), message}
-    receive do
-      reply -> reply
-    end
+    GenServer.call(bank_account_pid, message)
   end
 end

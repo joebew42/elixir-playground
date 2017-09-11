@@ -1,23 +1,18 @@
 defmodule BankAccountServer do
-  def loop(balance) do
-    receive do
-      {from, message} ->
-        {response, new_balance} = handle(message, balance)
-        send from, response
-        loop(new_balance)
-    end
+  use GenServer
+
+  def handle_call({:deposit, amount}, _from, balance) do
+    {response, state} = deposit(amount, balance)
+    {:reply, response, state}
   end
 
-  defp handle({:deposit, amount}, balance) do
-    deposit(amount, balance)
+  def handle_call({:withdraw, amount}, _from, balance) do
+    {response, state} = withdraw(amount, balance)
+    {:reply, response, state}
   end
 
-  defp handle({:withdraw, amount}, balance) do
-    withdraw(amount, balance)
-  end
-
-  defp handle({:check_balance}, balance) do
-    {balance, balance}
+  def handle_call({:check_balance}, _from, balance) do
+    {:reply, balance, balance}
   end
 
   defp deposit(amount, balance) when amount > 0 do
