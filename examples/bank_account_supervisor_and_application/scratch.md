@@ -2,8 +2,8 @@
 
 # TODO
 
+* introduce the application so that we can start BankSupervisor as a stand-alone program
+
 # DONE
 
-* introduce OTP gen_server for the BankAccount
-* decouple the GenServer from our application domain logic
-* introduce OTP gen_server for the BankServer
+* introduce the supervisor
