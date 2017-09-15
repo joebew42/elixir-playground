@@ -7,7 +7,8 @@ defmodule BankSupervisor do
 
   def init(:ok) do
     children = [
-      {BankServer, name: BankServer}
+      {BankServer, name: BankServer},
+      BankAccountSupervisor
     ]
 
     Supervisor.init(children, strategy: :one_for_one)

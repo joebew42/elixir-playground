@@ -34,7 +34,7 @@ defmodule BankServer do
     case exists?(account, accounts) do
       true -> {{:error, :account_already_exists}, accounts}
       false ->
-        {:ok, bank_account} = BankAccount.start()
+        {:ok, bank_account} = BankAccountSupervisor.start_bank_account()
         new_accounts = Map.put(accounts, account, bank_account)
         {{:ok, :account_created}, new_accounts}
     end
@@ -45,7 +45,7 @@ defmodule BankServer do
       false -> {{:error, :account_not_exists}, accounts}
       true ->
         bank_account = Map.get(accounts, account)
-        if BankAccount.stop(bank_account) do
+        if BankAccountSupervisor.stop_bank_account(bank_account) do
           {{:ok, :account_deleted}, Map.delete(accounts, account)}
         else
           {{:ok, :account_deleted}, accounts}
