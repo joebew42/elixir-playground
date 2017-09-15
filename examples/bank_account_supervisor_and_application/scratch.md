@@ -2,9 +2,12 @@
 
 # TODO
 
-* add a monitor for each BankAccount process so that we can update the lookup table
+* what about separate the bank client tests from bank server tests
+* how can we describe the behaviour of a bank account process that crashes
+* add a monitor for each BankAccount process so that we can update the lookup table when it crash
 * understand what the notation `@name` means
-* understand how to introduce a sort of storage mechanism (file, database, other)
+* understand how to introduce a sort of storage mechanism (file, database, other) to save the data of the bank account
+
 
 # DONE
 
