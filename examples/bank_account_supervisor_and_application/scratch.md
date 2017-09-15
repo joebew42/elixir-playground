@@ -1,10 +1,7 @@
 # DOING
 
-* introduce a supervisor for BankAccount processes
-
 # TODO
 
-* just to verify if we can use the notation used for the `BankServer` for the child process `BankAccountSupervisor` in the `BankSupervisor`
 * maybe we can get rid of `start` and `stop` functions of the `BankAccount` client
 * add a monitor for each BankAccount process so that we can update the lookup table
 * understand what the notation `@name` means
@@ -12,5 +9,7 @@
 
 # DONE
 
+* just to verify if we can use the notation used for the `BankServer` for the child process `BankAccountSupervisor` in the `BankSupervisor`
+* introduce a supervisor for BankAccount processes
 * introduce the application so that we can start BankSupervisor as a stand-alone program
 * introduce the supervisor
