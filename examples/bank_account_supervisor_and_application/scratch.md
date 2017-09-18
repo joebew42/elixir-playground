@@ -2,9 +2,12 @@
 
 # TODO
 
-* what about separate the bank client tests from bank server tests
+* in `bank_account_server` we have not used the `start_link` of the `genserver`
+* review the way we `create an account`, take a look at the responsabilities
+* should be better to use `name` instead of `process pid` to identifies `bank_account` processes?
 * how can we describe the behaviour of a bank account process that crashes
 * add a monitor for each BankAccount process so that we can update the lookup table when it crash
+* what about separate the bank client tests from bank server tests
 * understand what the notation `@name` means
 * understand how to introduce a sort of storage mechanism (file, database, other) to save the data of the bank account
 
