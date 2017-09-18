@@ -1,15 +1,17 @@
 # DOING
 
+* create a `BankAccountRegistry` in order to register processes with name
+
 # TODO
 
-* review the way we `create an account`, take a look at the responsabilities
-* should be better to use `name` instead of `process pid` to identifies `bank_account` processes?
+* make the `BankAccountSupervisor` to use the `BankAccountRegistry` to register new child process
+* review the way we `create an account` in the `BankServer`, maybe using the API of the `BankAccountSupervisor`
+* BUG: every time we delete an account because of `BankServerSupervisor`, a new and orphan `BankAccountServer` will be created.
+* BUG: every time a `BankAccountServer` crashes we lose the association between the new `process id` and the bank account `name`
 * how can we describe the behaviour of a bank account process that crashes
-* add a monitor for each BankAccount process so that we can update the lookup table when it crash
 * what about separate the bank client tests from bank server tests
 * understand what the notation `@name` means
 * understand how to introduce a sort of storage mechanism (file, database, other) to save the data of the bank account
-
 
 # DONE
 
