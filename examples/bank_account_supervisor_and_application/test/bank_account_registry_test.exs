@@ -11,4 +11,12 @@ defmodule BankAccountRegistryTest do
 
     assert {:reply, :undefined, %{}} == response
   end
+
+  test "returns the process id of a registered process" do
+    BankAccountRegistry.register_name("registered", :a_process_id)
+
+    response = BankAccountRegistry.whereis_name("registered")
+
+    assert {:reply, :a_process_id, %{registerd: :a_process_id}}
+  end
 end
