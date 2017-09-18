@@ -2,7 +2,7 @@ defmodule BankAccountServer do
   use GenServer
 
   def start_link(_opts) do
-    GenServer.start(BankAccountServer, 1000, [])
+    GenServer.start_link(BankAccountServer, 1000, [])
   end
 
   def handle_call({:deposit, amount}, _from, balance) do

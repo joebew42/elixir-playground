@@ -2,7 +2,6 @@
 
 # TODO
 
-* in `bank_account_server` we have not used the `start_link` of the `genserver`
 * review the way we `create an account`, take a look at the responsabilities
 * should be better to use `name` instead of `process pid` to identifies `bank_account` processes?
 * how can we describe the behaviour of a bank account process that crashes
@@ -14,6 +13,7 @@
 
 # DONE
 
+* in `bank_account_server` we have not used the `start_link` of the `genserver`
 * maybe we can get rid of `start` and `stop` functions of the `BankAccount` client
 * just to verify if we can use the notation used for the `BankServer` for the child process `BankAccountSupervisor` in the `BankSupervisor`
 * introduce a supervisor for BankAccount processes
