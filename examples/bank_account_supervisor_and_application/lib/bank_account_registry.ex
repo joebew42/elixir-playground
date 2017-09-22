@@ -31,7 +31,7 @@ defmodule BankAccountRegistry do
   end
 
   def handle_call({:whereis_name, name}, _from, names) do
-    {:reply, Map.get(names, name, :undefined), %{}}
+    {:reply, Map.get(names, name, :undefined), names}
   end
 
   def handle_call({:register_name, name, pid}, _from, names) do

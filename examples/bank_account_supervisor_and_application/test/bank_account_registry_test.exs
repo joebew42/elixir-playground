@@ -33,6 +33,15 @@ defmodule BankAccountRegistryTest do
     assert :a_process_id == response
   end
 
+  test "the whereis has no side effect on the lookup table" do
+    BankAccountRegistry.register_name("registered", :a_process_id)
+    BankAccountRegistry.whereis_name("registered")
+
+    response = BankAccountRegistry.whereis_name("registered")
+
+    assert :a_process_id == response
+  end
+
   test "unregister a registered name" do
     BankAccountRegistry.register_name("process_name", :a_process_pid)
     BankAccountRegistry.unregister_name("process_name")
