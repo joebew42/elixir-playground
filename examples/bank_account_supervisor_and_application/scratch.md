@@ -1,8 +1,11 @@
 # DOING
 
+* make the `BankAccountSupervisor` to use the `BankAccountRegistry` to register new child process
+
 # TODO
 
-* make the `BankAccountSupervisor` to use the `BankAccountRegistry` to register new child process
+* handle the `DOWN` of a registered process so that we can remove from the lookup table
+* make the use of `BankAccountRegistry` to be optional when we start a new `BankAccountServer`
 * review the way we `create an account` in the `BankServer`, maybe using the API of the `BankAccountSupervisor`
 * BUG: every time we delete an account, because of `BankServerSupervisor` a new and orphan `BankAccountServer` will be created.
 * BUG: every time a `BankAccountServer` crashes we lose the association between the new `process id` and the bank account `name`
