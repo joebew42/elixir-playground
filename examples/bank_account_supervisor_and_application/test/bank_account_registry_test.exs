@@ -63,4 +63,20 @@ defmodule BankAccountRegistryTest do
     assert true == is_pid(response)
     assert_received :a_message
   end
+
+  test "when a registered process is killed it will be removed" do
+    a_process = spawn fn -> loop() end
+    BankAccountRegistry.register_name("registered_process", a_process)
+
+    Process.exit(a_process, :kill)
+    Process.sleep(200)
+
+    assert :undefined == BankAccountRegistry.whereis_name("registered_process")
+  end
+
+  def loop() do
+    receive do
+      _ -> loop()
+    end
+  end
 end
