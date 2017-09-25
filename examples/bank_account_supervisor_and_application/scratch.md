@@ -2,10 +2,10 @@
 
 # TODO
 
-* make the use of `BankAccountRegistry` to be optional when we start a new `BankAccountServer`
-* review the way we `create an account` in the `BankServer`, maybe using the API of the `BankAccountSupervisor`
+* replace the use of the map in the `BankAccountServer` by using the `BankAccountRegistry`
 * BUG: every time we delete an account, because of `BankServerSupervisor` a new and orphan `BankAccountServer` will be created.
 * BUG: every time a `BankAccountServer` crashes we lose the association between the new `process id` and the bank account `name`
+* make the use of `BankAccountRegistry` to be optional when we start a new `BankAccountServer`
 * how can we describe the behaviour of a bank account process that crashes
 * what about separate the bank client tests from bank server tests
 * understand what the notation `@name` means
