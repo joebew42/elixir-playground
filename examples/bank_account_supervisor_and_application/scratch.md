@@ -2,7 +2,6 @@
 
 # TODO
 
-* handle the `DOWN` of a registered process so that we can remove from the lookup table
 * make the use of `BankAccountRegistry` to be optional when we start a new `BankAccountServer`
 * review the way we `create an account` in the `BankServer`, maybe using the API of the `BankAccountSupervisor`
 * BUG: every time we delete an account, because of `BankServerSupervisor` a new and orphan `BankAccountServer` will be created.
@@ -14,6 +13,7 @@
 
 # DONE
 
+* handle the `DOWN` of a registered process so that we can remove from the lookup table
 * make the `BankAccountSupervisor` to use the `BankAccountRegistry` to register new child process
 * create a `BankAccountRegistry` in order to register processes with name
 * in `bank_account_server` we have not used the `start_link` of the `genserver`
