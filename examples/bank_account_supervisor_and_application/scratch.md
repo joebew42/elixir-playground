@@ -1,7 +1,5 @@
 # DOING
 
-* make the `BankAccountSupervisor` to use the `BankAccountRegistry` to register new child process
-
 # TODO
 
 * handle the `DOWN` of a registered process so that we can remove from the lookup table
@@ -16,6 +14,7 @@
 
 # DONE
 
+* make the `BankAccountSupervisor` to use the `BankAccountRegistry` to register new child process
 * create a `BankAccountRegistry` in order to register processes with name
 * in `bank_account_server` we have not used the `start_link` of the `genserver`
 * maybe we can get rid of `start` and `stop` functions of the `BankAccount` client

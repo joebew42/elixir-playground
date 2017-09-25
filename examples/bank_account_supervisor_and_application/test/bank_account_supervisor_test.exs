@@ -14,4 +14,12 @@ defmodule BankAccountSupervisorTest do
 
     assert bank_account_pid == registered_pid
   end
+
+  test "when stopping a bank account it will be unregistered" do
+    {:ok, bank_account_pid} = BankAccountSupervisor.start_bank_account("a name")
+    response = BankAccountSupervisor.stop_bank_account("a name")
+
+    assert :ok == response
+    assert :undefined == BankAccountRegistry.whereis_name("a name")
+  end
 end
