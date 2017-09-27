@@ -9,11 +9,9 @@ defmodule BankTest do
     end
 
     test "we are able to create a new account", %{bank_pid: bank_pid} do
-      created_response = Bank.create_account(bank_pid, "non_existing_account")
-      already_exists_response = Bank.create_account(bank_pid, "non_existing_account")
+      response = Bank.create_account(bank_pid, "an_account")
 
-      assert {:ok, :account_created} == created_response
-      assert {:error, :account_already_exists} == already_exists_response
+      assert {:ok, :account_created} == response
     end
 
     test "we are not able to delete an account", %{bank_pid: bank_pid} do
