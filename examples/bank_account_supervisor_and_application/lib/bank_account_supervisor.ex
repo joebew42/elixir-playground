@@ -16,10 +16,6 @@ defmodule BankAccountSupervisor do
     Supervisor.start_child(__MODULE__, [name])
   end
 
-  def start_bank_account do
-    Supervisor.start_child(__MODULE__, [])
-  end
-
   def stop_bank_account(name) do
     Supervisor.terminate_child(__MODULE__, BankAccountRegistry.whereis_name(name))
   end

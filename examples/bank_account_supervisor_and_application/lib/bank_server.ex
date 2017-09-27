@@ -34,7 +34,7 @@ defmodule BankServer do
     case exists?(account, accounts) do
       true -> {{:error, :account_already_exists}, accounts}
       false ->
-        {:ok, bank_account} = BankAccountSupervisor.start_bank_account()
+        {:ok, bank_account} = BankAccountSupervisor.start_bank_account(account)
         new_accounts = Map.put(accounts, account, bank_account)
         {{:ok, :account_created}, new_accounts}
     end
