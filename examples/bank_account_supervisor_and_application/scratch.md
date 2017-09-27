@@ -1,12 +1,12 @@
 # DOING
 
-
+* understand how to deal with the `application` for our tests
 
 # TODO
 
-* can the tests be run in parallel?
 * BUG: every time we delete an account, because of `BankServerSupervisor` a new and orphan `BankAccountServer` will be created.
 * BUG: every time a `BankAccountServer` crashes we lose the association between the new `process id` and the bank account `name`
+* can the tests be run in parallel?
 * make the use of `BankAccountRegistry` to be optional when we start a new `BankAccountServer`
 * how can we describe the behaviour of a bank account process that crashes
 * what about separate the bank client tests from bank server tests
