@@ -4,6 +4,7 @@ defmodule BankTest do
   describe "when account does not exists" do
 
     setup do
+      start_supervised BankAccountRegistry
       {:ok, bank_pid} = start_supervised BankServer
       %{bank_pid: bank_pid}
     end
@@ -42,6 +43,7 @@ defmodule BankTest do
   describe "when account exists" do
 
     setup do
+      start_supervised BankAccountRegistry
       {:ok, bank_pid} = start_supervised BankServer
       Bank.create_account(bank_pid, "existing_account")
       Bank.create_account(bank_pid, "other_existing_account")
