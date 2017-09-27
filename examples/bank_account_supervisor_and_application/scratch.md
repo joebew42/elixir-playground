@@ -1,8 +1,10 @@
 # DOING
 
+
+
 # TODO
 
-* replace the use of the map in the `BankAccountServer` by using the `BankAccountRegistry`
+* can the tests be run in parallel?
 * BUG: every time we delete an account, because of `BankServerSupervisor` a new and orphan `BankAccountServer` will be created.
 * BUG: every time a `BankAccountServer` crashes we lose the association between the new `process id` and the bank account `name`
 * make the use of `BankAccountRegistry` to be optional when we start a new `BankAccountServer`
@@ -13,6 +15,7 @@
 
 # DONE
 
+* replace the use of the map in the `BankAccountServer` in favor of the `BankAccountRegistry`
 * handle the `DOWN` of a registered process so that we can remove from the lookup table
 * make the `BankAccountSupervisor` to use the `BankAccountRegistry` to register new child process
 * create a `BankAccountRegistry` in order to register processes with name

@@ -2,88 +2,74 @@ defmodule BankServer do
   use GenServer
 
   def start_link(opts) do
-    GenServer.start_link(__MODULE__, %{}, opts)
+    GenServer.start_link(__MODULE__, :ok, opts)
   end
 
-  def handle_call({:create_account, account}, _from, accounts) do
-    {response, state} = create_account(account, accounts)
+  def handle_call({:create_account, account}, _from, state) do
+    response = create_account(account)
     {:reply, response, state}
   end
 
-  def handle_call({:delete_account, account}, _from, accounts) do
-    {response, state} = delete_account(account, accounts)
+  def handle_call({:delete_account, account}, _from, state) do
+    response = delete_account(account)
     {:reply, response, state}
   end
 
-  def handle_call({:check_balance, account}, _from, accounts) do
-    {response, state} = check_balance(account, accounts)
+  def handle_call({:check_balance, account}, _from, state) do
+    response = check_balance(account)
     {:reply, response, state}
   end
 
-  def handle_call({:deposit, amount, account}, _from, accounts) do
-    {response, state} = deposit(amount, account, accounts)
+  def handle_call({:deposit, amount, account}, _from, state) do
+    response = deposit(amount, account)
     {:reply, response, state}
   end
 
-  def handle_call({:withdraw, amount, account}, _from, accounts) do
-    {response, state} = withdraw(amount, account, accounts)
+  def handle_call({:withdraw, amount, account}, _from, state) do
+    response = withdraw(amount, account)
     {:reply, response, state}
   end
 
-  defp create_account(account, accounts) do
-    case exists?(account, accounts) do
-      true -> {{:error, :account_already_exists}, accounts}
-      false ->
-        {:ok, bank_account} = BankAccountSupervisor.start_bank_account(account)
-        new_accounts = Map.put(accounts, account, bank_account)
-        {{:ok, :account_created}, new_accounts}
+  defp create_account(account) do
+    case BankAccountRegistry.whereis_name(account) do
+      :undefined ->
+        {:ok, _} = BankAccountSupervisor.start_bank_account(account)
+        {:ok, :account_created}
+      _ -> {:error, :account_already_exists}
     end
   end
 
-  defp delete_account(account, accounts) do
-    case exists?(account, accounts) do
-      false -> {{:error, :account_not_exists}, accounts}
-      true ->
-        bank_account = Map.get(accounts, account)
-        if BankAccountSupervisor.stop_bank_account(bank_account) do
-          {{:ok, :account_deleted}, Map.delete(accounts, account)}
-        else
-          {{:ok, :account_deleted}, accounts}
-        end
+  defp delete_account(account) do
+    case BankAccountRegistry.whereis_name(account) do
+      :undefined -> {:error, :account_not_exists}
+      _ ->
+        :ok = BankAccountSupervisor.stop_bank_account(account)
+        {:ok, :account_deleted}
     end
   end
 
-  defp check_balance(account, accounts) do
-    case exists?(account, accounts) do
-      false -> {{:error, :account_not_exists}, accounts}
-      true ->
-        bank_account = Map.get(accounts, account)
-        response = BankAccount.check_balance(bank_account)
-        {{:ok, response}, accounts}
+  defp check_balance(account) do
+    case BankAccountRegistry.whereis_name(account) do
+      :undefined -> {:error, :account_not_exists}
+      bank_account_pid ->
+        current_balance = BankAccount.check_balance(bank_account_pid)
+        {:ok, current_balance}
     end
   end
 
-  defp deposit(amount, account, accounts) do
-    case exists?(account, accounts) do
-      false -> {{:error, :account_not_exists}, accounts}
-      true ->
-        bank_account = Map.get(accounts, account)
-        BankAccount.deposit(bank_account, amount)
-        {:ok, accounts}
+  defp deposit(amount, account) do
+    case BankAccountRegistry.whereis_name(account) do
+      :undefined -> {:error, :account_not_exists}
+      bank_account_pid ->
+        BankAccount.deposit(bank_account_pid, amount)
+        {:ok}
     end
   end
 
-  defp withdraw(amount, account, accounts) do
-    case exists?(account, accounts) do
-      false -> {{:error, :account_not_exists}, accounts}
-      true ->
-        bank_account = Map.get(accounts, account)
-        response = BankAccount.withdraw(bank_account, amount)
-        {response, accounts}
+  defp withdraw(amount, account) do
+    case BankAccountRegistry.whereis_name(account) do
+      :undefined -> {:error, :account_not_exists}
+      bank_account_pid -> BankAccount.withdraw(bank_account_pid, amount)
     end
-  end
-
-  defp exists?(account, accounts) do
-    Map.has_key?(accounts, account)
   end
 end
