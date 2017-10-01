@@ -2,8 +2,8 @@ defmodule BankAccountSupervisorTest do
   use ExUnit.Case
 
   setup do
-    BankAccountRegistry.start_link([])
-    BankAccountSupervisor.start_link([])
+    start_supervised({BankAccountSupervisor, name: BankAccountSupervisor})
+    start_supervised BankAccountRegistry
     %{}
   end
 
