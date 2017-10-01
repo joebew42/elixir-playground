@@ -1,6 +1,6 @@
 # DOING
 
-* understand how to deal with the `application` for our tests
+* understand how to deal with the automatic startup of the `application` and our tests
 
 # TODO
 
