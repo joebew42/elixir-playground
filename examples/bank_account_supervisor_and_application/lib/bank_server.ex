@@ -1,8 +1,8 @@
 defmodule BankServer do
   use GenServer
 
-  def start_link(opts) do
-    GenServer.start_link(__MODULE__, :ok, opts)
+  def start_link(_opts) do
+    GenServer.start_link(__MODULE__, :ok, name: :bank_server)
   end
 
   def handle_call({:create_account, account}, _from, state) do

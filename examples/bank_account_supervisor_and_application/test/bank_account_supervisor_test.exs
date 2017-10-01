@@ -2,7 +2,7 @@ defmodule BankAccountSupervisorTest do
   use ExUnit.Case
 
   setup do
-    start_supervised({BankAccountSupervisor, name: BankAccountSupervisor})
+    start_supervised BankAccountSupervisor
     start_supervised BankAccountRegistry
     %{}
   end

@@ -1,8 +1,8 @@
 defmodule BankAccountSupervisor do
   use Supervisor
 
-  def start_link(opts) do
-    Supervisor.start_link(__MODULE__, [], opts)
+  def start_link(_opts) do
+    Supervisor.start_link(__MODULE__, [], name: :bank_account_supervisor)
   end
 
   def init(_) do
@@ -13,11 +13,11 @@ defmodule BankAccountSupervisor do
   end
 
   def start_bank_account(name) do
-    Supervisor.start_child(__MODULE__, [name])
+    Supervisor.start_child(:bank_account_supervisor, [name])
   end
 
   def stop_bank_account(name) do
-    Supervisor.terminate_child(__MODULE__, BankAccountRegistry.whereis_name(name))
+    Supervisor.terminate_child(:bank_account_supervisor, BankAccountRegistry.whereis_name(name))
   end
 
 end
