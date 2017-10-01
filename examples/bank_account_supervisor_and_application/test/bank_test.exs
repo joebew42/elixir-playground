@@ -7,6 +7,7 @@ defmodule BankTest do
       start_supervised BankAccountSupervisor
       start_supervised BankAccountRegistry
       start_supervised BankServer
+
       %{}
     end
 
