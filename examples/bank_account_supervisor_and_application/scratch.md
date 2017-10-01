@@ -5,14 +5,13 @@
 * BUG: every time we delete an account, because of `BankServerSupervisor` a new and orphan `BankAccountServer` will be created.
 * BUG: every time a `BankAccountServer` crashes we lose the association between the new `process id` and the bank account `name`
 * can we run the tests in parallel?
-* at the moment the `BankAccountRegistry` and `BankAccountServer` are _coupled_
-* how can we describe the behaviour of a bank account process that crashes
-* what about separate the bank client tests from bank server tests
+* at the moment the `BankAccountRegistry` and `BankAccountServer` are _coupled_ (Test Doubles)
 * understand what the notation `@name` means
-* understand how to introduce a sort of storage mechanism (file, database, other) to save the data of the bank account
+* understand how to introduce a sort mechanism of storage (file, database, other) to save the data of the bank account
 
 # DONE
 
+* how can we describe the behaviour of a bank account process that crashes
 * understand how to deal with the automatic startup of the `application` and our tests
 * replace the use of the map in the `BankAccountServer` in favor of the `BankAccountRegistry`
 * handle the `DOWN` of a registered process so that we can remove from the lookup table
