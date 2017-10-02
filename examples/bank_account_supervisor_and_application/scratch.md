@@ -2,7 +2,6 @@
 
 # TODO
 
-* BUG: every time a `BankAccountServer` crashes we lose the association between the new `process id` and the bank account `name`
 * can we run the tests in parallel?
 * at the moment the `BankAccountRegistry` and `BankAccountServer` are _coupled_ (Test Doubles)
 * understand what the notation `@name` means
@@ -10,6 +9,7 @@
 
 # DONE
 
+* BUG: every time a `BankAccountServer` crashes or it is killed we lose the association between the new `process id` and the bank account `name`
 * BUG: every time we delete an account, because of `BankAccountSupervisor` a new and orphan `BankAccountServer` will be created.
 * how can we describe the behaviour of a bank account process that crashes
 * understand how to deal with the automatic startup of the `application` and our tests

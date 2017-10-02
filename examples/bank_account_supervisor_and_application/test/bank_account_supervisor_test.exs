@@ -22,4 +22,15 @@ defmodule BankAccountSupervisorTest do
     assert :ok == response
     assert :undefined == BankAccountRegistry.whereis_name("a name")
   end
+
+  test "when a bank account crashes it will be created and registered with same name" do
+    {:ok, bank_account_pid} = BankAccountSupervisor.start_bank_account("a name")
+    Process.exit(bank_account_pid, :kill)
+    Process.sleep(200)
+
+    new_bank_account_pid = BankAccountRegistry.whereis_name("a name")
+
+    assert true == is_pid(new_bank_account_pid)
+    assert bank_account_pid != new_bank_account_pid
+  end
 end
