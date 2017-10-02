@@ -1,5 +1,5 @@
 defmodule BankTest do
-  use ExUnit.Case
+  use ExUnit.Case, async: true
 
   describe "when account does not exists" do
 

@@ -1,5 +1,5 @@
 defmodule BankAccountSupervisorTest do
-  use ExUnit.Case
+  use ExUnit.Case, async: true
 
   setup do
     start_supervised BankAccountSupervisor
