@@ -1,8 +1,9 @@
 # DOING
 
+* at the moment the `BankAccountRegistry` and `BankAccountServer` are _coupled_ (Test Doubles)
+
 # TODO
 
-* at the moment the `BankAccountRegistry` and `BankAccountServer` are _coupled_ (Test Doubles)
 * understand what the notation `@name` means
 * understand how to introduce a sort mechanism of storage (file, database, other) to save the data of the bank account
 
