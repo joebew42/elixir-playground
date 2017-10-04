@@ -1,10 +1,8 @@
 defmodule BankAccountServer do
   use GenServer
 
-  @naming_strategy Application.get_env(:bank, :naming_strategy)
-
   def start_link(name) do
-    GenServer.start_link(BankAccountServer, 1000, name: @naming_strategy.create(name))
+    GenServer.start_link(BankAccountServer, 1000, name: {:via, BankAccountRegistry, name})
   end
 
   def handle_call({:deposit, amount}, _from, balance) do
