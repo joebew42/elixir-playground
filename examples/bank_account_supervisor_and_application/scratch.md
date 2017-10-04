@@ -1,14 +1,13 @@
 # DOING
 
-* at the moment the `BankAccountRegistry` and `BankAccountServer` are _coupled_ (Test Doubles)
-
 # TODO
 
-* understand what the notation `@name` means
 * understand how to introduce a sort mechanism of storage (file, database, other) to save the data of the bank account
 
 # DONE
 
+* understand what the notation `@name` means
+* at the moment the `BankAccountRegistry` and `BankAccountServer` are _coupled_ (Test Doubles)
 * can we run the tests in parallel?
 * BUG: every time a `BankAccountServer` crashes or it is killed we lose the association between the new `process id` and the bank account `name`
 * BUG: every time we delete an account, because of `BankAccountSupervisor` a new and orphan `BankAccountServer` will be created.
