@@ -6,7 +6,7 @@ defmodule BankTest do
     setup do
       start_supervised BankAccountSupervisor
       start_supervised BankAccountRegistry
-      start_supervised BankServer
+      start_supervised Bank
 
       %{}
     end
@@ -47,7 +47,7 @@ defmodule BankTest do
     setup do
       start_supervised BankAccountSupervisor
       start_supervised BankAccountRegistry
-      start_supervised BankServer
+      start_supervised Bank
 
       Bank.create_account("existing_account")
       Bank.create_account("other_existing_account")
