@@ -4,6 +4,7 @@
 
 # TODO
 
+* expose the Bank application using HTTP
 * understand how to introduce a sort mechanism of storage (file, database, other) to save the data of the bank account
 
 # DONE
