@@ -1,4 +1,4 @@
-defmodule BankApplication do
+defmodule Bank do
   use Application
 
   def start(_type, _args) do
