@@ -1,5 +1,7 @@
 # DOING
 
+* find a way to make the organization of all source files more readable
+
 # TODO
 
 * understand how to introduce a sort mechanism of storage (file, database, other) to save the data of the bank account
