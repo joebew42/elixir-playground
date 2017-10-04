@@ -1,6 +1,7 @@
 # DOING
 
 * find a way to make the organization of all source files more readable
+ * merge servers and client (e.g. `BankAccountServer` will be merged in `BankAccount` and so on)
 
 # TODO
 
