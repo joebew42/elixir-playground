@@ -1,4 +1,4 @@
-defmodule Bank do
+defmodule BankAdmin do
   use GenServer
 
   def create_account(account) do
