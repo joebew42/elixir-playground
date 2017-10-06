@@ -18,7 +18,7 @@ defmodule Bank.Account do
   end
 
   def start_link(name, naming_strategy \\ NamingStrategy.Tuple) do
-    GenServer.start_link(Bank.Account, 1000, name: naming_strategy.create(name))
+    GenServer.start_link(__MODULE__, 1000, name: naming_strategy.create(name))
   end
 
   def handle_call({:deposit, amount}, _from, balance) do

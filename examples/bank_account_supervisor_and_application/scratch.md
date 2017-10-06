@@ -1,16 +1,15 @@
 # DOING
 
-* find a way to make the organization of all source files more readable
-
 # TODO
 
-* replace Bank.Account in `__MODULE__` in `lib/bank/account.ex`
+* how we can expose the Bank application using an HTTP server
 * understand how to use the `alias` feature
-* expose the Bank application using HTTP
 * understand how to introduce a sort mechanism of storage (file, database, other) to save the data of the bank account
 
 # DONE
 
+* replace `Bank.Account` with `__MODULE__` in `lib/bank/account.ex`
+* find a way to make the organization of all source files more readable
 * understand what the notation `@name` means
 * at the moment the `BankAccountRegistry` and `BankAccountServer` are _coupled_ (Test Doubles)
 * can we run the tests in parallel?
