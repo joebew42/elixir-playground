@@ -5,7 +5,7 @@ defmodule Bank.AdminTest do
 
     setup do
       start_supervised BankAccountSupervisor
-      start_supervised BankAccountRegistry
+      start_supervised Bank.AccountRegistry
 
       start_supervised Bank.Admin
 
@@ -47,7 +47,7 @@ defmodule Bank.AdminTest do
 
     setup do
       start_supervised BankAccountSupervisor
-      start_supervised BankAccountRegistry
+      start_supervised Bank.AccountRegistry
       start_supervised Bank.Admin
 
       Bank.Admin.create_account("existing_account")

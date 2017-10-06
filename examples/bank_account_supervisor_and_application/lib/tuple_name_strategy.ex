@@ -1,5 +1,5 @@
 defmodule TupleNameStrategy do
   def create(name) do
-    {:via, BankAccountRegistry, name}
+    {:via, Bank.AccountRegistry, name}
   end
 end

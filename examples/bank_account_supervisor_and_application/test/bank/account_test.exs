@@ -8,7 +8,7 @@ defmodule Bank.AccountTest do
   end
 
   test "we should be able to use a registry as default naming strategy" do
-    BankAccountRegistry.start_link([])
+    Bank.AccountRegistry.start_link([])
     {:ok, pid} = Bank.Account.start_link("a name")
 
     assert true == is_pid(pid)

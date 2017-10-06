@@ -1,4 +1,4 @@
-defmodule BankAccountRegistry do
+defmodule Bank.AccountRegistry do
   use GenServer
 
   def start_link(_opts) do

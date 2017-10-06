@@ -55,7 +55,7 @@ defmodule Bank.Admin do
   end
 
   defp _create_account(account) do
-    case BankAccountRegistry.whereis_name(account) do
+    case Bank.AccountRegistry.whereis_name(account) do
       :undefined ->
         {:ok, _} = BankAccountSupervisor.start_bank_account(account)
         {:ok, :account_created}
@@ -64,7 +64,7 @@ defmodule Bank.Admin do
   end
 
   defp _delete_account(account) do
-    case BankAccountRegistry.whereis_name(account) do
+    case Bank.AccountRegistry.whereis_name(account) do
       :undefined -> {:error, :account_not_exists}
       _ ->
         :ok = BankAccountSupervisor.stop_bank_account(account)
@@ -73,7 +73,7 @@ defmodule Bank.Admin do
   end
 
   defp _check_balance(account) do
-    case BankAccountRegistry.whereis_name(account) do
+    case Bank.AccountRegistry.whereis_name(account) do
       :undefined -> {:error, :account_not_exists}
       bank_account_pid ->
         current_balance = Bank.Account.check_balance(bank_account_pid)
@@ -82,7 +82,7 @@ defmodule Bank.Admin do
   end
 
   defp _deposit(amount, account) do
-    case BankAccountRegistry.whereis_name(account) do
+    case Bank.AccountRegistry.whereis_name(account) do
       :undefined -> {:error, :account_not_exists}
       bank_account_pid ->
         Bank.Account.deposit(bank_account_pid, amount)
@@ -91,7 +91,7 @@ defmodule Bank.Admin do
   end
 
   defp _withdraw(amount, account) do
-    case BankAccountRegistry.whereis_name(account) do
+    case Bank.AccountRegistry.whereis_name(account) do
       :undefined -> {:error, :account_not_exists}
       bank_account_pid -> Bank.Account.withdraw(bank_account_pid, amount)
     end

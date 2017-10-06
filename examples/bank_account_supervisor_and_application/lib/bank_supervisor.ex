@@ -9,7 +9,7 @@ defmodule BankSupervisor do
     children = [
       Bank.Admin,
       BankAccountSupervisor,
-      BankAccountRegistry
+      Bank.AccountRegistry
     ]
 
     Supervisor.init(children, strategy: :one_for_one)
