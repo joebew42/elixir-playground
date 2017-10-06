@@ -2,6 +2,6 @@ defmodule Bank do
   use Application
 
   def start(_type, _args) do
-    BankSupervisor.start_link([])
+    Bank.Supervisor.start_link([])
   end
 end
