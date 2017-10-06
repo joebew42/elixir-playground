@@ -8,7 +8,7 @@ defmodule BankSupervisor do
   def init(:ok) do
     children = [
       Bank.Admin,
-      BankAccountSupervisor,
+      Bank.AccountSupervisor,
       Bank.AccountRegistry
     ]
 

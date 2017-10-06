@@ -57,7 +57,7 @@ defmodule Bank.Admin do
   defp _create_account(account) do
     case Bank.AccountRegistry.whereis_name(account) do
       :undefined ->
-        {:ok, _} = BankAccountSupervisor.start_bank_account(account)
+        {:ok, _} = Bank.AccountSupervisor.start_bank_account(account)
         {:ok, :account_created}
       _ -> {:error, :account_already_exists}
     end
@@ -67,7 +67,7 @@ defmodule Bank.Admin do
     case Bank.AccountRegistry.whereis_name(account) do
       :undefined -> {:error, :account_not_exists}
       _ ->
-        :ok = BankAccountSupervisor.stop_bank_account(account)
+        :ok = Bank.AccountSupervisor.stop_bank_account(account)
         {:ok, :account_deleted}
     end
   end

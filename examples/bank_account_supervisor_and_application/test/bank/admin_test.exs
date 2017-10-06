@@ -4,7 +4,7 @@ defmodule Bank.AdminTest do
   describe "when account does not exists" do
 
     setup do
-      start_supervised BankAccountSupervisor
+      start_supervised Bank.AccountSupervisor
       start_supervised Bank.AccountRegistry
 
       start_supervised Bank.Admin
@@ -46,7 +46,7 @@ defmodule Bank.AdminTest do
   describe "when account exists" do
 
     setup do
-      start_supervised BankAccountSupervisor
+      start_supervised Bank.AccountSupervisor
       start_supervised Bank.AccountRegistry
       start_supervised Bank.Admin
 

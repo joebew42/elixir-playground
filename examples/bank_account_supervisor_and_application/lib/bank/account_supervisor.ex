@@ -1,4 +1,4 @@
-defmodule BankAccountSupervisor do
+defmodule Bank.AccountSupervisor do
   use Supervisor
 
   def start_link(_opts) do
