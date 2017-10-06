@@ -76,7 +76,7 @@ defmodule Bank.Admin do
     case BankAccountRegistry.whereis_name(account) do
       :undefined -> {:error, :account_not_exists}
       bank_account_pid ->
-        current_balance = BankAccount.check_balance(bank_account_pid)
+        current_balance = Bank.Account.check_balance(bank_account_pid)
         {:ok, current_balance}
     end
   end
@@ -85,7 +85,7 @@ defmodule Bank.Admin do
     case BankAccountRegistry.whereis_name(account) do
       :undefined -> {:error, :account_not_exists}
       bank_account_pid ->
-        BankAccount.deposit(bank_account_pid, amount)
+        Bank.Account.deposit(bank_account_pid, amount)
         {:ok}
     end
   end
@@ -93,7 +93,7 @@ defmodule Bank.Admin do
   defp _withdraw(amount, account) do
     case BankAccountRegistry.whereis_name(account) do
       :undefined -> {:error, :account_not_exists}
-      bank_account_pid -> BankAccount.withdraw(bank_account_pid, amount)
+      bank_account_pid -> Bank.Account.withdraw(bank_account_pid, amount)
     end
   end
 end

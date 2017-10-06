@@ -4,6 +4,8 @@
 
 # TODO
 
+* replace Bank.Account in `__MODULE__` in `lib/bank/account.ex`
+* understand how to use the `alias` feature
 * expose the Bank application using HTTP
 * understand how to introduce a sort mechanism of storage (file, database, other) to save the data of the bank account
 

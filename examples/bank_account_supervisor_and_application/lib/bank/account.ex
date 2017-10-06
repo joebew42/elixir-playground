@@ -1,4 +1,4 @@
-defmodule BankAccount do
+defmodule Bank.Account do
   use GenServer
 
   def check_balance(bank_account_pid) do
@@ -18,7 +18,7 @@ defmodule BankAccount do
   end
 
   def start_link(name, naming_strategy \\ TupleNameStrategy) do
-    GenServer.start_link(BankAccount, 1000, name: naming_strategy.create(name))
+    GenServer.start_link(Bank.Account, 1000, name: naming_strategy.create(name))
   end
 
   def handle_call({:deposit, amount}, _from, balance) do

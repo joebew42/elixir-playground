@@ -7,7 +7,7 @@ defmodule BankAccountSupervisor do
 
   def init(_) do
     children = [
-      worker(BankAccount, [])
+      worker(Bank.Account, [])
     ]
     supervise(children, strategy: :simple_one_for_one)
   end
