@@ -1,0 +1,2 @@
+defmodule EctoExamples do
+end
