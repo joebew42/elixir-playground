@@ -1,7 +1,11 @@
 use Mix.Config
 
 config :ecto_examples, EctoExamples.Repo,
-  adapter: Sqlite.Ecto2,
-  database: "ecto_examples.sqlite3"
+  adapter: Ecto.Adapters.Postgres,
+  database: "ecto_examples",
+  username: "postgres",
+  password: "postgres",
+  hostname: "localhost",
+  port: "5432"
 
 config :ecto_examples, ecto_repos: [EctoExamples.Repo]

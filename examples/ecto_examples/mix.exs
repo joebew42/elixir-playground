@@ -13,14 +13,14 @@ defmodule EctoExamples.Mixfile do
 
   def application do
     [
-      extra_applications: [:logger, :sqlite_ecto2, :ecto]
+      extra_applications: [:logger, :ecto]
     ]
   end
 
   defp deps do
     [
       {:ecto, "~> 2.0"},
-      {:sqlite_ecto2, "~> 2.2"}
+      {:postgrex, ">= 0.0.0"}
     ]
   end
 end
