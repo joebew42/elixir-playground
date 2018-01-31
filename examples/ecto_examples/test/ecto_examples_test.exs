@@ -21,6 +21,10 @@ defmodule EctoExamplesTest do
     assert changeset.valid?
   end
 
+  # test "validation should fail when parameter is not valid" do
+  #   changeset = Person.changeset(@valid_person, [username: "joe"])
+  # end
+
   test "should insert a person" do
     {result, _} = @valid_person
     |> Person.changeset(%{})
