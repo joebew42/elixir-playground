@@ -10,17 +10,15 @@ defmodule EctoExamplesTest do
   end
 
   test "validation should fail" do
-    %Ecto.Changeset{errors: errors} = %Person{}
-    |> Person.changeset
+    changeset = Person.changeset(%Person{})
 
-    assert [] != errors
+    refute changeset.valid?
   end
 
   test "validation should be valid" do
-    %Ecto.Changeset{errors: errors} = @valid_person
-    |> Person.changeset
+    changeset = Person.changeset(@valid_person)
 
-    assert [] == errors
+    assert changeset.valid?
   end
 
   test "should insert a person" do
