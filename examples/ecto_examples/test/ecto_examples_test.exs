@@ -1,14 +1,12 @@
 defmodule EctoExamplesTest do
-  use ExUnit.Case
+  use ExUnit.Case, async: true
 
   alias EctoExamples.Person
 
   @valid_person  %Person{first_name: "joe", last_name: "bew"}
 
-  setup_all do
-    EctoExamples.Application.start(nil, nil)
-    :timer.sleep(50)
-    :ok
+  setup do
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(EctoExamples.Repo)
   end
 
   test "validation should fail" do
