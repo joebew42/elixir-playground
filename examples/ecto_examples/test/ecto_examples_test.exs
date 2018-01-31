@@ -1,12 +1,12 @@
 defmodule EctoExamplesTest do
   use ExUnit.Case, async: true
 
-  alias EctoExamples.Person
+  alias EctoExamples.{Person, Repo}
 
   @valid_person  %Person{first_name: "joe", last_name: "bew"}
 
   setup do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(EctoExamples.Repo)
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Repo)
   end
 
   test "validation should fail" do
@@ -26,7 +26,7 @@ defmodule EctoExamplesTest do
   test "should insert a person" do
     {result, _} = @valid_person
     |> Person.changeset(%{})
-    |> EctoExamples.Repo.insert
+    |> Repo.insert
 
     assert :ok == result
   end
@@ -34,10 +34,10 @@ defmodule EctoExamplesTest do
   test "should fail if there are associated posts" do
     {_, person} = @valid_person
     |> Person.changeset(%{})
-    |> EctoExamples.Repo.insert
+    |> Repo.insert
 
     first_post = Ecto.build_assoc(person, :posts, %{header: "Clickbait header", body: "No real content"})
-    first_post |> EctoExamples.Repo.insert
+    first_post |> Repo.insert
 
     second_post = Ecto.build_assoc(person, :posts, %{header: "Second post title", body: "No real content"})
     second_post |> EctoExamples.Repo.insert
