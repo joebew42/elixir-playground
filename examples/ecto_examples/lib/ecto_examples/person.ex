@@ -17,4 +17,12 @@ defmodule EctoExamples.Person do
     |> Ecto.Changeset.validate_required(@required_params)
     |> Ecto.Changeset.no_assoc_constraint(:posts)
   end
+
+  def params_changeset(_person, params \\ %{}) do
+    types = %{username: :string}
+
+    {%{}, types}
+    |> Ecto.Changeset.cast(params, Map.keys(types))
+    |> Ecto.Changeset.validate_length(:username, min: 3, message: "Username is not valid")
+  end
 end
