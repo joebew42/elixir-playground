@@ -46,17 +46,17 @@ defmodule EctoExamplesTest do
     first_post |> Repo.insert
 
     second_post = Ecto.build_assoc(person, :posts, %{header: "Second post title", body: "No real content"})
-    second_post |> EctoExamples.Repo.insert
+    second_post |> Repo.insert
 
-    person_with_posts = EctoExamples.Person
-    |> EctoExamples.Repo.get(person.id)
-    |> EctoExamples.Repo.preload(:posts)
+    person_with_posts = Person
+    |> Repo.get(person.id)
+    |> Repo.preload(:posts)
 
     assert person_with_posts.posts != []
 
     {result, _} = person_with_posts
-    |> EctoExamples.Person.changeset(%{})
-    |> EctoExamples.Repo.delete
+    |> Person.changeset(%{})
+    |> Repo.delete
 
     assert :error == result
   end
