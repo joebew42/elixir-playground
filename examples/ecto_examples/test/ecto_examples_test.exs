@@ -29,6 +29,14 @@ defmodule EctoExamplesTest do
     assert message == "Username is not valid"
   end
 
+  test "mixed validation with parameters and fields should fail" do
+    changeset = Person.create_changeset(@valid_person, %{username: "jo"})
+
+    {message, _} = changeset.errors[:username]
+
+    assert message == "Username is not valid"
+  end
+
   test "should insert a person" do
     {result, _} = @valid_person
     |> Person.changeset(%{})
